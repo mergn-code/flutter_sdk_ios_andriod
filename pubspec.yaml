@@ -1,7 +1,8 @@
 name: flutter_plugin
 description: "Mergn Flutter Plugin"
 version: 0.0.1
-homepage:
+homepage: https://github.com/mergn-code/flutter_sdk_ios_andriod
+repository: https://github.com/mergn-code/flutter_sdk_ios_andriod
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
