@@ -21,15 +21,15 @@ struct Campaigns: Codable {
 
 // MARK: - Campaign
 struct Campaign: Codable {
-    let message: Message
-    let campaignId: Int
-    let campaignEntryTime: String
-    //let campaignEntryTimeValue: String?
-    let campaignCustomerInstanceId: Int
+    let message: Message?
+    let campaignId: Int?
+    let campaignEntryTime: String?
+    let campaignEntryTimeValue: String?
+    let campaignCustomerInstanceId: String?
 }
 
 // MARK: - Message
 struct Message: Codable {
-    let name: String
-    let design: String
+    let name: String?
+    let design: String?
 }

@@ -19,9 +19,9 @@ struct EventRequestModel{
         let eventId: Int
         let eventProperties: [EventProperty]
         let sessionId: String
-        let campaignCustomerInstanceId: String? = nil
-        let campaignId: String? = nil
-        let name: String? = nil
+        var campaignCustomerInstanceId: String? = nil
+        var campaignId: String? = nil
+        var name: String? = nil
     }
     
     // MARK: - EventRequest

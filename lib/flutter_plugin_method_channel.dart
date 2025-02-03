@@ -168,5 +168,13 @@ class MethodChannelFlutterPlugin extends FlutterPluginPlatform {
       } on PlatformException catch (e) {
         print("Failed to send token: '${e.message}'.");
       }
-    }}
+    }
+    else if(Platform.isIOS){
+      try {
+        await methodChannel.invokeMethod('fcm_token', {"token": value});
+      } on PlatformException catch (e) {
+        print("Failed to send token: '${e.message}'.");
+      }
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_plugin/flutter_plugin.dart';
-import 'package:flutter_plugin/flutter_plugin_platform_interface.dart';
-import 'package:flutter_plugin/flutter_plugin_method_channel.dart';
+import 'package:mergn_flutter_plugin/flutter_plugin.dart';
+import 'package:mergn_flutter_plugin/flutter_plugin_platform_interface.dart';
+import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterPluginPlatform

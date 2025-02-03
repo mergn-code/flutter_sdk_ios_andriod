@@ -85,7 +85,7 @@ class FlutterPluginMergn: FlutterPlugin, MethodChannel.MethodCallHandler, Activi
         channel.setMethodCallHandler(this)
         application = binding.applicationContext as Application
         applicationContext= binding.applicationContext
-        com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
+       // com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
         print("onAttachedToEngine")
     }
 
@@ -107,6 +107,7 @@ class FlutterPluginMergn: FlutterPlugin, MethodChannel.MethodCallHandler, Activi
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         context = binding.activity
         application = binding.activity.application
+        com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
         Log.d("MergnMethodCallHandler", "onAttachedToActivity")
         print("onAttachedToActivity")
     }

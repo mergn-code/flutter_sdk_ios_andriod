@@ -1,7 +1,8 @@
-name: flutter_plugin
+name: mergn_flutter_plugin
 description: "Mergn Flutter Plugin"
-version: 0.0.1
-publish_to: https://pub.dev
+version: 1.0.4
+homepage: https://github.com/mergn-code/flutter_sdk_ios_andriod
+repository: https://github.com/mergn-code/flutter_sdk_ios_andriod
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
@@ -41,15 +42,8 @@ flutter:
         pluginClass: FlutterPluginMergn
       ios:
         pluginClass: FlutterPluginMergn
-      linux:
-        pluginClass: FlutterPlugin
       macos:
         pluginClass: FlutterPlugin
-      windows:
-        pluginClass: FlutterPluginCApi
-      web:
-        pluginClass: FlutterPluginWeb
-        fileName: flutter_plugin_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
