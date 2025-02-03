@@ -3,8 +3,8 @@
 # Run `pod lib lint flutter_plugin.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_plugin'
-  s.version          = '0.0.1'
+  s.name             = 'mergn_flutter_plugin'
+  s.version          = '1.0.0'
   s.summary          = 'Mergn Flutter Plugin'
   s.description      = <<-DESC
 Mergn Flutter Plugin
