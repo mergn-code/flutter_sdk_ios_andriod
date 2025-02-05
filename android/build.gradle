@@ -49,6 +49,7 @@ android {
 
     defaultConfig {
         minSdkVersion 23
+        consumerProguardFiles 'src/main/proguard-rules.txt'
     }
 
     dependencies {
@@ -56,7 +57,8 @@ android {
         testImplementation 'org.mockito:mockito-core:5.0.0'
 
         //implementation 'com.github.mergn-code:mergn-sdk-android:2.4.2'
-        implementation 'com.github.mergn-code:mergn-sdk-android:2.7.2'
+        //implementation 'com.github.mergn-code:mergn-sdk-android:2.7.2'
+        implementation 'com.github.mergn-code:mergn-sdk-android:2.8.4'
         implementation "androidx.room:room-runtime:2.4.0"
         implementation "com.squareup.retrofit2:retrofit:2.9.0"
         implementation "com.squareup.retrofit2:converter-gson:2.9.0"

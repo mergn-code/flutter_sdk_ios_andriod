@@ -47,11 +47,8 @@ public class EventManager {
 
     // Method to add an event
     func addEvent(_ name: String, _ event: Event) {
-        do {
-            eventMap[name] = event
-        } catch {
-            print("Error adding event: \(error)")
-        }
+        eventMap[name] = event
+      
     }
 
     // Method to get an event by name
@@ -61,11 +58,7 @@ public class EventManager {
 
     // Method to add an attribute
     func addAttribute(_ name: String, _ attribute: AttributeListResponse.Attribute) {
-        do {
-            attributeMap[name] = attribute
-        } catch {
-            print("Error adding attribute: \(error)")
-        }
+        attributeMap[name] = attribute
     }
 
     // Method to get an attribute by name
@@ -75,65 +68,45 @@ public class EventManager {
 
     // Generate or retrieve a unique identifier
     public  func getUniqueIdentifier() -> String {
-        do {
-            if let savedIdentifier = UserDefaults.standard.string(forKey: identifierKey) {
+        if let savedIdentifier = UserDefaults.standard.string(forKey: identifierKey) {
                 return savedIdentifier
             } else {
                 let newIdentifier = UUID().uuidString
                 UserDefaults.standard.set(newIdentifier, forKey: identifierKey)
                 return newIdentifier
             }
-        } catch {
-            print("Error retrieving unique identifier: \(error)")
-            return ""
         }
-    }
 
     // Save Unique Customer Id
     public func saveCustomerId(customerId : String) -> String {
-        do {
-            let saveCustomerId = customerId
+       let saveCustomerId = customerId
             UserDefaults.standard.set(saveCustomerId, forKey: customerMergnKey)
             return saveCustomerId
-        } catch {
-            print("Error saving customer ID: \(error)")
-            return ""
-        }
     }
 
     // Save Firebase Token
     public func saveFirebaseToken(token : String) -> String {
-        do {
-            let firebaseToken = token
-            UserDefaults.standard.set(firebaseToken, forKey: firebaseTokenMergn)
-            return firebaseToken
-        } catch {
-            print("Error saving Firebase token: \(error)")
-            return ""
+        guard !token.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                print("Invalid token: Token is empty")
+                return ""
+            }
+
+            UserDefaults.standard.set(token, forKey: firebaseTokenMergn)
+            return token
         }
-    }
 
     public func getCustomerId() -> String {
-        do {
-            if let saveCustomerId = UserDefaults.standard.string(forKey: customerMergnKey) {
-                return saveCustomerId
-            }
-        } catch {
-            print("Error retrieving customer ID: \(error)")
-        }
-        return ""
+        return UserDefaults.standard.string(forKey: customerMergnKey) ?? ""
     }
 
     public func getFirebaseToken() -> String {
-        do {
-            if let firebaseToken = UserDefaults.standard.string(forKey: firebaseTokenMergn) {
-                return firebaseToken
-            }
-        } catch {
-            print("Error retrieving Firebase token: \(error)")
+        guard let firebaseToken = UserDefaults.standard.string(forKey: firebaseTokenMergn), !firebaseToken.isEmpty else {
+            print("Firebase token not found or is empty")
+            return ""
         }
-        return ""
+        return firebaseToken
     }
+
 
     public func getEventList() {
         do {
@@ -156,21 +129,26 @@ public class EventManager {
     }
 
     public func getAttributeList() {
-        do {
-            NetworkManager.shared.getAttributeList { result in
-                switch result {
-                case .success(let attributeList):
-                    for attributeData in attributeList.data {
-                        EventManager.shared.addAttribute(attributeData.key, attributeData.value)
-                    }
-                case .failure(let error):
-                    print("Error fetching attribute list: \(error)")
+        NetworkManager.shared.getAttributeList { result in
+            switch result {
+            case .success(let attributeList):
+                if attributeList.data.isEmpty {
+                    print("Error: No attribute data available.")
+                    return
                 }
+
+                for attributeData in attributeList.data {
+                    EventManager.shared.addAttribute(attributeData.key, attributeData.value)
+                }
+                
+            case .failure(let error):
+                print("Error fetching attribute list: \(error)")
             }
-        } catch {
-            print("Error in getAttributeList: \(error)")
         }
     }
+
+
+
 
     // Static method for posting identification
     public func postIdentification(identity: String? = nil) {
@@ -314,10 +292,29 @@ public class EventManager {
                     let currentVC = SDKManager.shared.getCurrentViewController()
 
                     DispatchQueue.main.async {
-                        if !self.campaing.campaigns.isEmpty {
-                            self.campaignId = String(self.campaing.campaigns.first?.campaignId ?? 0)
-                            self.campaignInstanceId = self.campaing.campaigns.first?.campaignCustomerInstanceId ?? ""
-                            self.openWebView(from: currentVC!, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
+                        do{
+                            
+                            if !self.campaing.campaigns.isEmpty {
+                                self.campaignId = String(self.campaing.campaigns.first?.campaignId ?? 0)
+                                self.campaignInstanceId = self.campaing.campaigns.first?.campaignCustomerInstanceId ?? ""
+//                                if let currentVC = currentVC {
+//                                    // Now currentVC is safely unwrapped and can be used
+//                                    self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
+//                                } else {
+//                                    print("currentVC is nil")
+//                                }
+                                
+                                guard let currentVC = currentVC else {
+                                            throw EventManagerError.unknownError
+                                        }
+
+                                        // Now call the openWebView method which may throw an error
+                                        try self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
+                            }
+                        }
+                        catch  let error {
+                            // Handle and print the error thrown from the do block
+                            print("Error in showing campaign: \(error)")
                         }
                     }
                 case .failure(let error):
@@ -445,4 +442,10 @@ public class EventManager {
             print("Error in notificationTapped: \(error)")
         }
     }
+    
+    enum EventManagerError: Error {
+        case networkError(description: String)
+        case unknownError
+    }
+
 }

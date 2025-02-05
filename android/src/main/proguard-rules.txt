@@ -1,0 +1,9 @@
+-keep public class com.mergn.insights.classes.** {
+    public protected *;
+}
+-keep class com.mergn.insights.networkservices.API.** { *; }
+-keep class com.mergn.insights.networkservices.requests.** { *; }
+-keep class com.mergn.insights.networkservices.responses.** { *; }
+-keep class com.mergn.insights.networkservices.RetrofitClient { *; }
+-keep class com.mergn.insights.firebaseservices.** { *; }
+-keep class com.mergn.insights.views.** { *; }

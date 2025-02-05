@@ -8,26 +8,30 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isAndroid) {
-    await Firebase.initializeApp(
-      options: FirebaseOptions(
-        apiKey: 'YOUR_ANDROID_API_KEY',
-        appId: '1:301998040977:android:be0d9b2a1fe27b376ddc30',
-        messagingSenderId: '301998040977',
-        projectId: 'flutter-android-and-ios',
-        storageBucket: 'YOUR_ANDROID_STORAGE_BUCKET',
-      ),
-    );
-  } else if (Platform.isIOS) {
-    await Firebase.initializeApp(
-      options: FirebaseOptions(
-        apiKey: 'AIzaSyAWVV1FmwcgX5FCLVpFJND7i0OqWhe-QiQ',
-        appId: '1:301998040977:ios:dc7a5a86ef16e3336ddc30',
-        messagingSenderId: '301998040977',
-        projectId: 'flutter-android-and-ios',
-        storageBucket: 'flutter-android-and-ios.firebasestorage.app',
-      ),
-    );
+  try {
+    if (Platform.isAndroid) {
+      await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: 'AIzaSyCkwUhjvskWK6o19jnSC3yd2Nkk-juSfTE',
+          appId: '1:301998040977:android:be0d9b2a1fe27b376ddc30',
+          messagingSenderId: '301998040977',
+          projectId: 'flutter-android-and-ios',
+          storageBucket: 'lutter-android-and-ios.firebasestorage.app',
+        ),
+      );
+    } else if (Platform.isIOS) {
+      await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: 'AIzaSyAWVV1FmwcgX5FCLVpFJND7i0OqWhe-QiQ',
+          appId: '1:301998040977:ios:dc7a5a86ef16e3336ddc30',
+          messagingSenderId: '301998040977',
+          projectId: 'flutter-android-and-ios',
+          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
+        ),
+      );
+    }
+  } catch (e) {
+    print("Failed to initialize Firebase: $e");
   }
   runApp(MyApp());
 }
@@ -57,8 +61,6 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
   final TextEditingController _eventNameController = TextEditingController();
   final TextEditingController _dynamicAttributeController = TextEditingController();
   final TextEditingController _identityController = TextEditingController();
-
-  //static const platform = MethodChannel('mergnKotlinSDK'); // Channel for iOS communication
 
   @override
   Widget build(BuildContext context) {
@@ -145,10 +147,12 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     final clientApiKey = 'api key'; // Hardcoded API key
 
     try {
-      MethodChannelFlutterPlugin().registerAPICall(
+      await MethodChannelFlutterPlugin().registerAPICall(
           "787bc5fb1f13150564d187eb0bfaf1fbm35rgn303e547cb2e3b758a2f4a7ce810b10e3");
     } on PlatformException catch (e) {
       print("Failed to register API: '${e.message}'.");
+    } catch (e) {
+      print("Unexpected error during API registration: $e");
     }
   }
 
@@ -160,10 +164,12 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     }; // Sample event properties
 
     try {
-      MethodChannelFlutterPlugin().sendEvent(eventName, eventProperties);
+      await MethodChannelFlutterPlugin().sendEvent(eventName, eventProperties);
       print("Event Sent: $eventName");
     } on PlatformException catch (e) {
       print("Failed to send event: '${e.message}'.");
+    } catch (e) {
+      print("Unexpected error while sending event: $e");
     }
   }
 
@@ -173,11 +179,13 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
     if (dynamicAttributeValue.isNotEmpty) {
       try {
-        MethodChannelFlutterPlugin().sendAttribute(
+        await MethodChannelFlutterPlugin().sendAttribute(
             "Email", dynamicAttributeValue);
         print("Attribute Sent: Email = $dynamicAttributeValue");
       } on PlatformException catch (e) {
         print("Failed to send attribute: '${e.message}'.");
+      } catch (e) {
+        print("Unexpected error while sending attribute: $e");
       }
     } else {
       print("Dynamic Attribute cannot be empty");
@@ -191,9 +199,11 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
     if (identity.isNotEmpty) {
       try {
-        MethodChannelFlutterPlugin().login(identity);
+        await MethodChannelFlutterPlugin().login(identity);
       } on PlatformException catch (e) {
         print("Failed to send identity: '${e.message}'.");
+      } catch (e) {
+        print("Unexpected error while sending identity: $e");
       }
     } else {
       print("Identity cannot be empty");
@@ -201,28 +211,22 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
   }
 
   void getToken() async {
+    try {
+      // String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+      // print('APNS Token: $apnsToken');
+      // await Future.delayed(Duration(seconds: 2));
 
-    String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-    print('APNS Token: $apnsToken');
-    await Future.delayed(Duration(seconds: 2));
-  /*  // Retrieve the APNs token
-   // String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-    if (apnsToken != null) {
-      print("APNs Token: $apnsToken");
-    } else {
-      print("Failed to get APNs token");
-    }*/
+      // Get the FCM token for the device
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
 
-    // Get the FCM token for the device
-    String? fcmToken = await FirebaseMessaging.instance.getToken();
-
-    if (fcmToken != null) {
-      print("FCM Token: $fcmToken");
-      MethodChannelFlutterPlugin().firebaseToken(fcmToken);
-    } else {
-      print("Failed to get FCM token");
+      if (fcmToken != null) {
+        print("FCM Token: $fcmToken");
+        await MethodChannelFlutterPlugin().firebaseToken(fcmToken);
+      } else {
+        print("Failed to get FCM token");
+      }
+    } catch (e) {
+      print("Failed to get tokens: $e");
     }
-
-
   }
 }

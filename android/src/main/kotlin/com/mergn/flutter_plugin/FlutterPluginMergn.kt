@@ -13,123 +13,137 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 /** FlutterPlugin */
-class FlutterPluginMergn: FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
-    private lateinit var channel : MethodChannel
+class FlutterPluginMergn : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
+    // The MethodChannel that will be used for communication between Flutter and native Android.
+    private lateinit var channel: MethodChannel
     private lateinit var applicationContext: Context
     private lateinit var context: Context
     private lateinit var application: Application
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-
-        when (call.method) {
-            "InitializeSdk" -> {
-                com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
-                result.success("Successfully Initialized")
+        try {
+            when (call.method) {
+                "InitializeSdk" -> {
+                    com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
+                    result.success("Successfully Initialized")
+                }
+                "registerAPI" -> {
+                    val apiKey = call.argument<String>("apiKey")
+                    val eventManager = EventManager()
+                    eventManager.registerApiKey(apiKey.toString(), applicationContext)
+                    result.success(apiKey)
+                }
+                "sendEvent" -> {
+                    val eventManager = EventManager()
+                    val eventName = call.argument<String>("eventName")!!
+                    val eventProperties = call.argument<Map<String, String>>("eventProperties")!!
+                    eventManager.sendEvent(eventName, eventProperties, context, applicationContext)
+                    // Optionally, you can show a dialog (wrapped in exception handling if needed)
+                    // showDialog()
+                    result.success(null)
+                }
+                "sendAttribute" -> {
+                    val attributeManager = AttributeManager()
+                    val attributeName = call.argument<String>("attributeName")!!
+                    val attributeValue = call.argument<String>("attributeValue")!!
+                    attributeManager.sendAttribute(context, attributeName, attributeValue)
+                    result.success(null)
+                }
+                "login" -> {
+                    val eventManager = EventManager()
+                    val email = call.argument<String>("email")!!
+                    eventManager.login(email, context)
+                    result.success(null)
+                }
+                "fcm_token" -> {
+                    val eventManager = EventManager()
+                    val token = call.argument<String>("token")!!
+                    eventManager.firebaseToken(token, context)
+                    result.success(null)
+                }
+                "getPlatformVersion" -> {
+                    result.success("Android ${android.os.Build.VERSION.RELEASE}")
+                }
+                else -> result.notImplemented()
             }
-
-            "registerAPI" -> {
-                val apiKey = call.argument<String>("apiKey")
-                val eventManager = EventManager()
-
-                eventManager.registerApiKey(apiKey.toString(), applicationContext)
-                result.success(apiKey)
-            }
-
-            "sendEvent" -> {
-                val eventManager = EventManager()
-                val eventName = call.argument<String>("eventName")!!
-                val eventProperties = call.argument<Map<String, String>>("eventProperties")!!
-                eventManager.sendEvent(eventName, eventProperties, context, applicationContext)
-                //showDialog()
-
-                result.success(null)
-            }
-
-            "sendAttribute" -> {
-                val attributeManager = AttributeManager()
-                val attributeName = call.argument<String>("attributeName")!!
-                val attributeValue = call.argument<String>("attributeValue")!!
-                // Call your EventManager's sendEvent method here with eventName and eventProperties
-                attributeManager.sendAttribute(context, attributeName, attributeValue)
-                result.success(null) // Send success result if needed
-            }
-
-            "login" -> {
-                val eventManager = EventManager()
-                val email = call.argument<String>("email")!!
-                eventManager.login(email, context)
-                result.success(null)
-            }
-
-            "fcm_token" -> {
-                val eventManager = EventManager()
-                val token = call.argument<String>("token")!!
-                eventManager.firebaseToken(token, context)
-                result.success(null)
-            }
-
-            "getPlatformVersion" -> {
-                result.success("Android ${android.os.Build.VERSION.RELEASE}")
-            }
-
-            else -> result.notImplemented()
+        } catch (e: Exception) {
+            // Log the exception and send an error response back to Flutter.
+            Log.e("FlutterPluginMergn", "Error handling method call ${call.method}", e)
+            result.error("EXCEPTION", e.message, null)
         }
     }
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(binding.binaryMessenger, "flutter_plugin")
-        channel.setMethodCallHandler(this)
-        application = binding.applicationContext as Application
-        applicationContext= binding.applicationContext
-       // com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
-        print("onAttachedToEngine")
+        try {
+            channel = MethodChannel(binding.binaryMessenger, "flutter_plugin")
+            channel.setMethodCallHandler(this)
+            application = binding.applicationContext as Application
+            applicationContext = binding.applicationContext
+            Log.d("FlutterPluginMergn", "onAttachedToEngine")
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error in onAttachedToEngine", e)
+        }
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
-        Log.d("MergnMethodCallHandler", "onDetachedFromEngine")
-        print("onDetachedFromEngine")
+        try {
+            channel.setMethodCallHandler(null)
+            Log.d("FlutterPluginMergn", "onDetachedFromEngine")
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error in onDetachedFromEngine", e)
+        }
     }
 
-
     private fun showDialog() {
-        AlertDialog.Builder(context)
-            .setTitle("Native Dialog")
-            .setMessage("This is a native Android dialog opened from Flutter.")
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-            .show()}
+        try {
+            AlertDialog.Builder(context)
+                .setTitle("Native Dialog")
+                .setMessage("This is a native Android dialog opened from Flutter.")
+                .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                .show()
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error showing dialog", e)
+        }
+    }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        context = binding.activity
-        application = binding.activity.application
-        com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
-        Log.d("MergnMethodCallHandler", "onAttachedToActivity")
-        print("onAttachedToActivity")
+        try {
+            context = binding.activity
+            application = binding.activity.application
+            // Initialize the SDK when attached to an activity.
+            com.mergn.insights.classes.MergnSDK.Companion.initialize(application)
+            Log.d("FlutterPluginMergn", "onAttachedToActivity")
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error in onAttachedToActivity", e)
+        }
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        context = applicationContext
-        Log.d("MergnMethodCallHandler", "onDetachedFromActivityForConfigChanges")
-        print("onDetachedFromActivityForConfigChanges")
+        try {
+            context = applicationContext
+            Log.d("FlutterPluginMergn", "onDetachedFromActivityForConfigChanges")
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error in onDetachedFromActivityForConfigChanges", e)
+        }
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        context = binding.activity
-        application = binding.activity.application
-        Log.d("MergnMethodCallHandler", "onReattachedToActivityForConfigChanges")
-        print("onReattachedToActivityForConfigChanges")
-
+        try {
+            context = binding.activity
+            application = binding.activity.application
+            Log.d("FlutterPluginMergn", "onReattachedToActivityForConfigChanges")
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error in onReattachedToActivityForConfigChanges", e)
+        }
     }
 
     override fun onDetachedFromActivity() {
-        context= applicationContext
-        Log.d("MergnMethodCallHandler", "onDetachedFromActivity")
-        print("onDetachedFromActivity")
-
+        try {
+            context = applicationContext
+            Log.d("FlutterPluginMergn", "onDetachedFromActivity")
+        } catch (e: Exception) {
+            Log.e("FlutterPluginMergn", "Error in onDetachedFromActivity", e)
+        }
     }
 }
