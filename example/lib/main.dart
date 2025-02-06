@@ -10,7 +10,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
 
-
   } catch (e) {
     print("Failed to initialize Firebase: $e");
   }
@@ -129,7 +128,7 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
-          "API Key");
+          "");
     } on PlatformException catch (e) {
       print("Failed to register API: '${e.message}'.");
     } catch (e) {
