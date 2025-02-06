@@ -1,4 +1,3 @@
-## 1.0.1
+## 1.0.5
 
-Describe initial release.
-Pod installation fixes
+Added IOS implementation
