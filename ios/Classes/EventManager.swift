@@ -128,24 +128,29 @@ public class EventManager {
         }
     }
 
-    public func getAttributeList() {
-        NetworkManager.shared.getAttributeList { result in
-            switch result {
-            case .success(let attributeList):
-                if attributeList.data.isEmpty {
-                    print("Error: No attribute data available.")
-                    return
-                }
+   public func getAttributeList() {
+       NetworkManager.shared.getAttributeList { result in
+           switch result {
+           case .success(let attributeList):
+               do {
+                   guard !attributeList.data.isEmpty else {
+                       throw NSError(domain: "getAttributeList", code: 1001, userInfo: [NSLocalizedDescriptionKey: "No attribute data available."])
+                   }
 
-                for attributeData in attributeList.data {
-                    EventManager.shared.addAttribute(attributeData.key, attributeData.value)
-                }
-                
-            case .failure(let error):
-                print("Error fetching attribute list: \(error)")
-            }
-        }
-    }
+                   for attributeData in attributeList.data {
+                       EventManager.shared.addAttribute(attributeData.key, attributeData.value)
+                   }
+
+               } catch let processingError {
+                   print("Error processing attribute list: \(processingError.localizedDescription)")
+               }
+
+           case .failure(let error):
+               print("Error fetching attribute list: \(error.localizedDescription)")
+           }
+       }
+   }
+
 
 
 
