@@ -1,10 +1,3 @@
-//
-//  EventManager.swift
-//  mergn_ios
-//
-//  Created by Syed Hamza Hassan - Mergn on 05/11/2024.
-//
-
 import Foundation
 import UIKit
 import UserNotifications
@@ -13,9 +6,9 @@ public class EventManager {
     
     private let identifierKey = "com.example.uniqueIdentifier"
     private let customerMergnKey = "customer_mergn_key"
-    public  let apiMergnKey = "api_mergn_key"
+    public let apiMergnKey = "api_mergn_key"
     private var uiViewController: UIViewController?
-    private var campaing: Campaigns =  Campaigns(campaigns: [])
+    private var campaing: Campaigns = Campaigns(campaigns: [])
     private var campaignId = ""
     private var campaignInstanceId = ""
     private let firebaseTokenMergn = "mergn_firebase_token"
@@ -23,429 +16,201 @@ public class EventManager {
     // Static shared instance
     public static let shared = EventManager()
 
-    // Private initializer to prevent external instantiation
     private init() {
-        // You can set up default values or load configurations here
         print("EventManager initialized")
-    }
-
-    var eventsList: [String : Event] = [:]
-
-    // Generate or retrieve a unique identifier
-    public func registerAPI(clientApiKey: String) {
-        do {
-            let apiKey = clientApiKey
-            UserDefaults.standard.set(apiKey, forKey: apiMergnKey)
-            postIdentification()
-        } catch {
-            print("Error registering API: \(error)")
-        }
     }
 
     var eventMap: [String: Event] = [:]
     var attributeMap: [String: AttributeListResponse.Attribute] = [:]
 
-    // Method to add an event
-    func addEvent(_ name: String, _ event: Event) {
-        eventMap[name] = event
-      
+    public func registerAPI(clientApiKey: String) {
+        UserDefaults.standard.set(clientApiKey, forKey: apiMergnKey)
+        Task {
+            await postIdentification()
+        }
     }
 
-    // Method to get an event by name
+    func addEvent(_ name: String, _ event: Event) {
+        eventMap[name] = event
+    }
+
     func getEvent(byName name: String) -> Event? {
         return eventMap[name]
     }
 
-    // Method to add an attribute
     func addAttribute(_ name: String, _ attribute: AttributeListResponse.Attribute) {
         attributeMap[name] = attribute
     }
 
-    // Method to get an attribute by name
     func getAttribute(byName name: String) -> AttributeListResponse.Attribute? {
         return attributeMap[name]
     }
 
-    // Generate or retrieve a unique identifier
-    public  func getUniqueIdentifier() -> String {
+    public func getUniqueIdentifier() -> String {
         if let savedIdentifier = UserDefaults.standard.string(forKey: identifierKey) {
-                return savedIdentifier
-            } else {
-                let newIdentifier = UUID().uuidString
-                UserDefaults.standard.set(newIdentifier, forKey: identifierKey)
-                return newIdentifier
-            }
+            return savedIdentifier
+        } else {
+            let newIdentifier = UUID().uuidString
+            UserDefaults.standard.set(newIdentifier, forKey: identifierKey)
+            return newIdentifier
         }
-
-    // Save Unique Customer Id
-    public func saveCustomerId(customerId : String) -> String {
-       let saveCustomerId = customerId
-            UserDefaults.standard.set(saveCustomerId, forKey: customerMergnKey)
-            return saveCustomerId
     }
 
-    // Save Firebase Token
-    public func saveFirebaseToken(token : String) -> String {
-        guard !token.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-                print("Invalid token: Token is empty")
-                return ""
-            }
+    public func saveCustomerId(customerId: String) {
+        UserDefaults.standard.set(customerId, forKey: customerMergnKey)
+    }
 
-            UserDefaults.standard.set(token, forKey: firebaseTokenMergn)
-            return token
+    public func saveFirebaseToken(token: String) {
+        guard !token.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            print("Invalid token: Token is empty")
+            return
         }
+        UserDefaults.standard.set(token, forKey: firebaseTokenMergn)
+    }
 
     public func getCustomerId() -> String {
         return UserDefaults.standard.string(forKey: customerMergnKey) ?? ""
     }
 
     public func getFirebaseToken() -> String {
-        guard let firebaseToken = UserDefaults.standard.string(forKey: firebaseTokenMergn), !firebaseToken.isEmpty else {
-            print("Firebase token not found or is empty")
-            return ""
-        }
-        return firebaseToken
+        return UserDefaults.standard.string(forKey: firebaseTokenMergn) ?? ""
     }
 
-
-    public func getEventList() {
+    public func getEventList() async {
         do {
-            NetworkManager.shared.getEventList { result in
-                switch result {
-                case .success(let eventList):
-                    for eventData in eventList.data {
-                        EventManager.shared.addEvent(eventData.key, eventData.value)
-                    }
-                    if self.attributeMap.isEmpty {
-                        self.getAttributeList()
-                    }
-                case .failure(let error):
-                    print("Error fetching event list: \(error)")
-                }
+            let eventList = try await NetworkManager.shared.getEventList()
+            for eventData in eventList.data {
+                addEvent(eventData.key, eventData.value)
             }
-        } catch {
-            print("Error in getEventList: \(error)")
-        }
-    }
-
-    public func getAttributeList() {
-        NetworkManager.shared.getAttributeList { result in
-            switch result {
-            case .success(let attributeList):
-                if attributeList.data.isEmpty {
-                    print("Error: No attribute data available.")
-                    return
-                }
-
-                for attributeData in attributeList.data {
-                    EventManager.shared.addAttribute(attributeData.key, attributeData.value)
-                }
-                
-            case .failure(let error):
-                print("Error fetching attribute list: \(error)")
-            }
-        }
-    }
-
-
-
-
-    // Static method for posting identification
-    public func postIdentification(identity: String? = nil) {
-        do {
-            var requestBody = SetIdentificationRequest(deviceId: getUniqueIdentifier(), os: "iOS")
-
-            if let identity = identity, !identity.isEmpty {
-                requestBody = SetIdentificationRequest(deviceId: getUniqueIdentifier(), os: "iOS", identity: identity)
-            }
-
-            NetworkManager.shared.postIdentification(requestBody: requestBody) { result in
-                switch result {
-                case .success(let response):
-                    print("Post Identification Successful: \(response.data)")
-                    self.saveCustomerId(customerId: String(response.data))
-                    if self.eventMap.isEmpty {
-                        self.getEventList()
-                    }
-                case .failure(let error):
-                    print("Error posting identification: \(error)")
-                }
-            }
-        } catch {
-            print("Error in postIdentification: \(error)")
-        }
-    }
-
-    public func sendEvent(eventName: String, properties: [String: Any]) {
-        do {
-            if eventMap.isEmpty {
-                getEventList()
-                return
-            }
-
-            if eventMap.keys.contains(eventName) {
-                var eventDetails = EventManager.shared.getEvent(byName: eventName)
-                var eventId: Int = eventDetails?.id ?? 0
-                var eventProperties: [EventRequestModel.EventProperty] = []
-
-                if let propertiesEvent = eventDetails?.eventProperty {
-                    for (key, property) in propertiesEvent {
-                        if properties.keys.contains(property.name) {
-                            var newEventProperty = EventRequestModel.EventProperty(eventPropertyId: property.id, value: properties[property.name] as? String ?? "")
-                            eventProperties.append(newEventProperty)
-                        }
-                    }
-
-                    if propertiesEvent.keys.contains("Platform") {
-                        var newEventProperty1 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["Platform"]?.id ?? 0, value: "iOS")
-                        eventProperties.append(newEventProperty1)
-                    }
-
-                    if propertiesEvent.keys.contains("sdk-version") {
-                        var newEventProperty2 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["sdk-version"]?.id ?? 0, value: "2")
-                        eventProperties.append(newEventProperty2)
-                    }
-                }
-
-                var eventModel = EventRequestModel.Event(
-                    eventId: eventId,
-                    eventProperties: eventProperties,
-                    sessionId: getUniqueIdentifier()
-                )
-
-                var eventModelList: [EventRequestModel.Event] = [eventModel]
-                var eventRequestModel = EventRequestModel.EventRequest(
-                    customerId: getCustomerId(),
-                    deviceId: getUniqueIdentifier(),
-                    events: eventModelList
-                )
-
-                postEventToServer(eventRequestModel: eventRequestModel)
-            }
-        } catch {
-            print("Error in sendEvent: \(error)")
-        }
-    }
-
-    public func sendPopupEvent(eventName: String, popupActionProperty: String,
-                                popupAction: String, actionValue: String) {
-        do {
-            if eventMap.isEmpty {
-                getEventList()
-                return
-            }
-
-            if eventMap.keys.contains(eventName) {
-                let eventDetails = EventManager.shared.getEvent(byName: eventName)
-                let eventId: Int = eventDetails?.id ?? 0
-                var eventProperties: [EventRequestModel.EventProperty] = []
-
-                if let propertiesEvent = eventDetails?.eventProperty {
-                    if propertiesEvent.keys.contains(popupActionProperty) {
-                        var newEventProperty = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent[popupActionProperty]?.id ?? 0, value: actionValue)
-                        eventProperties.append(newEventProperty)
-                    }
-
-                    if propertiesEvent.keys.contains("Platform") {
-                        var newEventProperty1 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["Platform"]?.id ?? 0, value: "iOS")
-                        eventProperties.append(newEventProperty1)
-                    }
-
-                    if propertiesEvent.keys.contains("sdk-version") {
-                        var newEventProperty2 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["sdk-version"]?.id ?? 0, value: "2")
-                        eventProperties.append(newEventProperty2)
-                    }
-                }
-
-                var eventModel = EventRequestModel.Event(
-                    eventId: eventId,
-                    eventProperties: eventProperties,
-                    sessionId: getUniqueIdentifier(),
-                    campaignCustomerInstanceId: campaignInstanceId,
-                    campaignId: campaignId,
-                    name: popupAction
-                )
-
-                var eventModelList: [EventRequestModel.Event] = [eventModel]
-                var eventRequestModel = EventRequestModel.EventRequest(
-                    customerId: getCustomerId(),
-                    deviceId: getUniqueIdentifier(),
-                    events: eventModelList
-                )
-
-                postEventToServer(eventRequestModel: eventRequestModel)
-            }
-        } catch {
-            print("Error in sendPopupEvent: \(error)")
-        }
-    }
-
-    func postEventToServer(eventRequestModel: EventRequestModel.EventRequest) {
-        do {
-            var requestBody = eventRequestModel
-
-            NetworkManager.shared.recordEvent(requestBody: requestBody) { result in
-                switch result {
-                case .success(let response):
-                    print("Post Record Event Successful: \(response.data)")
-                    self.campaing = response.data
-                    let currentVC = SDKManager.shared.getCurrentViewController()
-
-                    DispatchQueue.main.async {
-                        do{
-                            
-                            if !self.campaing.campaigns.isEmpty {
-                                self.campaignId = String(self.campaing.campaigns.first?.campaignId ?? 0)
-                                self.campaignInstanceId = self.campaing.campaigns.first?.campaignCustomerInstanceId ?? ""
-//                                if let currentVC = currentVC {
-//                                    // Now currentVC is safely unwrapped and can be used
-//                                    self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
-//                                } else {
-//                                    print("currentVC is nil")
-//                                }
-                                
-                                guard let currentVC = currentVC else {
-                                            throw EventManagerError.unknownError
-                                        }
-
-                                        // Now call the openWebView method which may throw an error
-                                        try self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
-                            }
-                        }
-                        catch  let error {
-                            // Handle and print the error thrown from the do block
-                            print("Error in showing campaign: \(error)")
-                        }
-                    }
-                case .failure(let error):
-                    print("Error posting Record Event: \(error)")
-                }
-            }
-        } catch {
-            print("Error in postEventToServer: \(error)")
-        }
-    }
-
-    public func sendAttribute(attributeName: String, attributeValue: String) {
-        do {
             if attributeMap.isEmpty {
-                getAttributeList()
+                await getAttributeList()
+            }
+        } catch {
+            print("Error fetching event list: \(error)")
+        }
+    }
+
+    public func getAttributeList() async {
+        do {
+            let attributeList = try await NetworkManager.shared.getAttributeList()
+            if attributeList.data.isEmpty {
+                print("Error: No attribute data available.")
                 return
             }
-
-            if attributeMap.keys.contains(attributeName) {
-                var attributeRequestModel = AttributeRequestModel.AttributeRequest(
-                    customerId: getCustomerId(),
-                    attributeId: EventManager.shared.getAttribute(byName: attributeName)?.id ?? 0,
-                    value: attributeValue
-                )
-
-                postAttributeToServer(attributeRequestModel: attributeRequestModel)
+            for attributeData in attributeList.data {
+                addAttribute(attributeData.key, attributeData.value)
             }
         } catch {
-            print("Error in sendAttribute: \(error)")
+            print("Error fetching attribute list: \(error)")
         }
     }
 
-    func postAttributeToServer(attributeRequestModel: AttributeRequestModel.AttributeRequest) {
-        do {
-            var requestBody = attributeRequestModel
+    public func postIdentification(identity: String? = nil) async {
+        guard let identity = identity, !identity.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            print("Identity should not be empty")
+            return
+        }
 
-            NetworkManager.shared.recordAttribute(requestBody: requestBody) { result in
-                switch result {
-                case .success(let response):
-                    print("Attribute Successfully Captured: \(response.data)")
-                case .failure(let error):
-                    print("Error posting Attribute: \(error)")
-                }
+        let requestBody = SetIdentificationRequest(
+            deviceId: getUniqueIdentifier(),
+            os: "iOS",
+            identity: identity
+        )
+
+        do {
+            let response = try await NetworkManager.shared.postIdentification(requestBody: requestBody)
+            print("Post Identification Successful: \(response.data)")
+            saveCustomerId(customerId: String(response.data))
+
+            if eventMap.isEmpty {
+                await getEventList()
             }
         } catch {
-            print("Error in postAttributeToServer: \(error)")
+            print("Error posting identification: \(error)")
         }
     }
 
-    var campaignResponse = Campaigns(campaigns: [])
 
-    public func openWebView(from parentViewController: UIViewController, htmlString: String) {
-        do {
-            var webViewController = WebViewController()
-            if !campaing.campaigns.isEmpty {
-                webViewController.loadHTML(campaing.campaigns.first?.message?.design ?? "")
+    public func sendEvent(eventName: String, properties: [String: Any]) async {
+        guard !eventMap.isEmpty else {
+            await getEventList()
+            return
+        }
+
+        guard let eventDetails = getEvent(byName: eventName) else { return }
+        var eventProperties: [EventRequestModel.EventProperty] = []
+
+        for (key, property) in eventDetails.eventProperty {
+            if let value = properties[property.name] as? String {
+                eventProperties.append(EventRequestModel.EventProperty(eventPropertyId: property.id, value: value))
             }
-            uiViewController = parentViewController
-            uiViewController?.present(webViewController, animated: true, completion: nil)
+        }
+
+        eventProperties.append(contentsOf: [
+            EventRequestModel.EventProperty(eventPropertyId: eventDetails.eventProperty["Platform"]?.id ?? 0, value: "iOS"),
+            EventRequestModel.EventProperty(eventPropertyId: eventDetails.eventProperty["sdk-version"]?.id ?? 0, value: "2")
+        ])
+
+        let eventModel = EventRequestModel.Event(
+            eventId: eventDetails.id,
+            eventProperties: eventProperties,
+            sessionId: getUniqueIdentifier()
+        )
+
+        let eventRequestModel = EventRequestModel.EventRequest(
+            customerId: getCustomerId(),
+            deviceId: getUniqueIdentifier(),
+            events: [eventModel]
+        )
+
+        await postEventToServer(eventRequestModel: eventRequestModel)
+    }
+
+    func postEventToServer(eventRequestModel: EventRequestModel.EventRequest) async {
+        do {
+            let response = try await NetworkManager.shared.recordEvent(requestBody: eventRequestModel)
+            print("Post Record Event Successful: \(response.data)")
+            campaing = response.data
+            if let currentVC = SDKManager.shared.getCurrentViewController(), !campaing.campaigns.isEmpty {
+                campaignId = String(campaing.campaigns.first?.campaignId ?? 0)
+                campaignInstanceId = campaing.campaigns.first?.campaignCustomerInstanceId ?? ""
+                await openWebView(from: currentVC, htmlString: campaing.campaigns.first?.message?.design ?? "")
+            }
         } catch {
-            print("Error opening WebView: \(error)")
+            print("Error posting event: \(error)")
         }
     }
 
-    func decodeAddEventResponse(from jsonData: Data) {
-        do {
-            let decoder = JSONDecoder()
-            let decodedResponse = try decoder.decode(AddEventResponse.self, from: jsonData)
-            print("Decoded Response: \(decodedResponse)")
-        } catch {
-            print("Decoding Error: \(error)")
+    public func openWebView(from parentViewController: UIViewController, htmlString: String) async {
+        let webViewController = WebViewController()
+        if !campaing.campaigns.isEmpty {
+            webViewController.loadHTML(campaing.campaigns.first?.message?.design ?? "")
         }
+        uiViewController = parentViewController
+        parentViewController.present(webViewController, animated: true, completion: nil)
     }
 
     public func firebaseToken(token: String) {
-        do {
-            print(token)
-            saveFirebaseToken(token: token)
-            if token.isEmpty {
-                return
-            }
-            postDeviceToken()
-        } catch {
-            print("Error in firebaseToken: \(error)")
+        saveFirebaseToken(token: token)
+        guard !token.isEmpty else { return }
+        Task {
+            await postDeviceToken()
         }
     }
 
-    func postDeviceToken() {
+    func postDeviceToken() async {
+        let appToken = AppPushToken(token: getFirebaseToken())
+        let requestBody = AppDeviceTokenRequest(
+            device_id: getUniqueIdentifier(),
+            is_app_push_subscribed: true,
+            device_platform: "app_ios",
+            app_push_token: appToken
+        )
         do {
-            var appToken = AppPushToken(token: getFirebaseToken())
-            var requestBody = AppDeviceTokenRequest(device_id: getUniqueIdentifier(), is_app_push_subscribed: true, device_platform: "app_ios", app_push_token: appToken)
-            NetworkManager.shared.postToken(requestBody: requestBody) { result in
-                switch result {
-                case .success(let response):
-                    print("Token Successfully Captured: \(response.data)")
-                case .failure(let error):
-                    print("Error posting Token: \(error)")
-                }
-            }
+            let response = try await NetworkManager.shared.postToken(requestBody: requestBody)
+            print("Token Successfully Captured: \(response.data)")
         } catch {
-            print("Error in postDeviceToken: \(error)")
+            print("Error posting token: \(error)")
         }
     }
-
-    public func notificationViewed(notificationData: UNNotificationRequest) {
-        do {
-            if let campaignInstanceId = notificationData.content.userInfo["campaignCustomerInstanceId"] as? String {
-                self.campaignInstanceId = campaignInstanceId
-            }
-            campaignId = "86"
-            sendPopupEvent(eventName: EventNames.notificationViewed.rawValue, popupActionProperty: "", popupAction: PopupActionName.view.rawValue, actionValue: "")
-        } catch {
-            print("Error in notificationViewed: \(error)")
-        }
-    }
-
-    public func notificationTapped(notificationData: UNNotificationRequest) {
-        do {
-            if let campaignInstanceId = notificationData.content.userInfo["campaignCustomerInstanceId"] as? String {
-                self.campaignInstanceId = campaignInstanceId
-            }
-            campaignId = "86"
-            sendPopupEvent(eventName: EventNames.notificationClicked.rawValue, popupActionProperty: "", popupAction: PopupActionName.click.rawValue, actionValue: "")
-        } catch {
-            print("Error in notificationTapped: \(error)")
-        }
-    }
-    
-    enum EventManagerError: Error {
-        case networkError(description: String)
-        case unknownError
-    }
-
 }
