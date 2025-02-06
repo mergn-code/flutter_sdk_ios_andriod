@@ -33,14 +33,14 @@ import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
 
 Register your API Key:
 
-kotlin
+
 MethodChannelFlutterPlugin().registerAPICall("API KEY");
 
 ### 2. Record Events
 
 Use the EventManager to record events by providing an event name and properties:
 
-kotlin
+
 String eventName = "Event Name";
 // Map<String, String> eventProperties = {"propertyName": "PropertyValue"}; // Optional property setup
 Map<String, String> eventProperties = Map(); // For empty properties
@@ -51,7 +51,7 @@ MethodChannelFlutterPlugin().sendEvent(eventName, eventProperties);
 
 Use the AttributeManager to record attributes by providing an attribute name and value:
 
-kotlin
+
 String attributeName = "Email"; // eventName.text.toString()
 String attributeValue = "fluttersdk@mergn.com";
 MethodChannelFlutterPlugin().sendAttribute(attributeName, attributeValue);
@@ -74,6 +74,60 @@ MethodChannelFlutterPlugin().firebaseToken(fcmToken.toString());
 
 
 This method should be called in any place where you would potentially land. Also, call this in onNewToken() and onRefreshToken() in your Firebase service.
+
+
+### 6. IOS Notification and UI reference
+
+Add the following code in app delegate under Runner folder
+
+import UIKit
+import Flutter
+import mergn_flutter_plugin
+
+@main
+@objc class AppDelegate: FlutterAppDelegate {
+
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
+        if let flutterViewController = window?.rootViewController as? FlutterViewController {
+            SDKManager.shared.setCurrentViewController(flutterViewController)
+        }
+        UNUserNotificationCenter.current().delegate = self
+
+        // Register Flutter plugins
+        GeneratedPluginRegistrant.register(with: self)
+        
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+
+
+
+
+    override func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+         EventManager.shared.notificationViewed(notificationData: notification.request)
+         completionHandler([.banner, .alert, .sound, .badge])
+    }
+
+    // Handle push notifications when the app is opened from a notification
+    override func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Notification tapped: \(response.notification.request.content.userInfo)")
+        EventManager.shared.notificationTapped(notificationData: response.notification.request)
+        completionHandler()
+    }
+
+    // Handle background notifications
+    override func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // Process remote notification
+        print("Received notification in the background: \(userInfo)")
+        completionHandler(.newData)
+    }
+}
+
+
+
 
 ### Important Case
 

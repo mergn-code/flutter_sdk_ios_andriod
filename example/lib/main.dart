@@ -9,7 +9,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-
+    if (Platform.isAndroid) {
+      //Initialize Firebase here
+    } else if (Platform.isIOS) {
+      //initialize fire base here
+    }
   } catch (e) {
     print("Failed to initialize Firebase: $e");
   }
@@ -128,7 +132,7 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
-          "");
+          "API Key");
     } on PlatformException catch (e) {
       print("Failed to register API: '${e.message}'.");
     } catch (e) {

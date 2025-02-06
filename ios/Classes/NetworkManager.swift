@@ -29,7 +29,8 @@ class NetworkManager {
     static let shared = NetworkManager()  // Singleton instance
 
     private let session = URLSession.shared
-    private let baseURL = "https://devapi.mergn.com/sdk-management/api/"  // Replace with your API base URL
+   // private let baseURL = "https://devapi.mergn.com/sdk-management/api/"  // Replace with your API base URL
+    private let baseURL = "https://api.mergn.com/sdk-management/api/"  // Replace with your API base URL
 
     // Method to create headers for the API requests
     private func createHeaders() -> [String: String] {
