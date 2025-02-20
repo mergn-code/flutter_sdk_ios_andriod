@@ -15,13 +15,25 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//        maven { url 'https://jitpack.io' }
+//    }
+//}
+
+[rootProject, this].each {
+    it.allprojects {
+        repositories {
+            jcenter()
+            maven {
+                url 'https://jitpack.io'
+            }
+        }
     }
 }
+
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'

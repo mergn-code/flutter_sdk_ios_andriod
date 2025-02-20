@@ -4,23 +4,9 @@ This documentation provides integration steps and usage instructions for incorpo
 
 ## Integration Steps
 
-### 1. Include SDK in Your Project
+1. Add mergn_flutter_plugin_sdk: in pubsec.yml
 
-1. Place maven { url 'https://jitpack.io' } in android project level buid.gradle.
-
-
-    allprojects {
-    repositories {
-    google()
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-    }
-    }
-
-
-2. Add mergn_flutter_plugin_sdk: in pubsec.yml
-
-3. ## For IOS Run following commands
+2. ## For IOS Run following commands
 
 Run command flutter build iOS this will generate pod file.
 Run pod install
