@@ -19,6 +19,10 @@ public class EventManager {
     private var campaignId = ""
     private var campaignInstanceId = ""
     private let firebaseTokenMergn = "mergn_firebase_token"
+    private let appInstalledMergn = "mergn_app_installed"
+    let installEventSemaphore = DispatchSemaphore(value: 0)
+    
+    let appEventQueue = DispatchQueue(label: "com.mergn.appEventQueue")
 
     // Static shared instance
     public static let shared = EventManager()
@@ -33,7 +37,9 @@ public class EventManager {
 
     // Generate or retrieve a unique identifier
     public func registerAPI(clientApiKey: String) {
+    //Do call app launch here
         do {
+            self.fetchInstallDate()
             let apiKey = clientApiKey
             UserDefaults.standard.set(apiKey, forKey: apiMergnKey)
             postIdentification()
@@ -116,6 +122,15 @@ public class EventManager {
                     for eventData in eventList.data {
                         EventManager.shared.addEvent(eventData.key, eventData.value)
                     }
+                    self.addAppInstalledEvent()  // First, add app install event
+                    self.addAppLaunchEvent()    // Then, add app launch event
+//                    //Calling App launch here
+//                    if(!AppConstantsMergn.shared.isAppLaunch){
+//                    AppConstantsMergn.shared.isAppLaunch = true
+//                    print("App Launched Successfully")
+//                    self.sendEvent(eventName: AppConstantsMergn.shared.MERGN_APP_LAUNCHED, properties: [:]);
+//                    }
+                    //Calling App launch here
                     if self.attributeMap.isEmpty {
                         self.getAttributeList()
                     }
@@ -452,5 +467,107 @@ public class EventManager {
         case networkError(description: String)
         case unknownError
     }
+
+
+    // App Installed Logic
+
+  public var isAppInstallDateValid: Bool {
+      do {
+          // Retrieve the stored installation date from UserDefaults
+          guard let storedInstallDate = UserDefaults.standard.value(forKey: "appInstallDate") as? Date else {
+              return false // No install date found
+          }
+
+          // Check if the stored installation date is less than 5 minutes old
+          let currentDate = Date()
+          return currentDate.timeIntervalSince(storedInstallDate) < 5 * 60
+
+      } catch {
+          // If an error occurs, handle it here
+          print("Error retrieving or checking appInstallDate: \(error.localizedDescription)")
+          return false // Return false in case of error
+      }
+  }
+
+
+    private func fetchInstallDate() -> Date {
+        do {
+            if let documentsFolder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+                let attributes = try FileManager.default.attributesOfItem(atPath: documentsFolder.path)
+                if let installDate = attributes[.creationDate] as? Date {
+                    // Save the install date to UserDefaults
+                    UserDefaults.standard.set(installDate, forKey: "appInstallDate")
+                    print("Install Time : \(installDate)")
+                    return installDate
+                }
+            }
+        } catch {
+            // Handle any error that occurred when accessing the file system
+            print("Error retrieving creation date: \(error.localizedDescription)")
+        }
+
+        // Fallback to current date if an error occurs
+        let fallbackDate = Date()
+        // Optionally, save fallback date to UserDefaults
+        //UserDefaults.standard.set(fallbackDate, forKey: "appInstallDateFallback")
+        return fallbackDate
+    }
+
+    // Define a method to simulate adding app launch event with error handling
+
+    func addAppInstalledEvent() {
+        appEventQueue.async {
+            do {
+                // Simulate the app install event (this could be storing the install date or logging the event)
+               //Calling App launch here
+
+                if (self.isAppInstallDateValid && !UserDefaults.standard.bool(forKey: self.appInstalledMergn)){
+
+                    print("Mobile App installed Successfully ")
+                   
+                    UserDefaults.standard.set(true, forKey: self.appInstalledMergn)
+                     
+                    self.sendEvent(eventName: EventNames.appInstalled.rawValue, properties: [:]);
+                    // After the install event is done, signal the semaphore to unblock the launch event
+                   // self.installEventSemaphore.signal()
+
+                                }
+            } catch {
+                // Catch any error that occurred and handle it
+                print("Error adding app install event: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func addAppLaunchEvent() {
+        appEventQueue.async {
+            do {
+                    // Adding a 1-second delay before processing the launch event
+                      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                          do {
+                              // Perform the operation after the delay
+                              // Wait for the install event to complete before launching (if you have a semaphore, you can use it)
+                              // self.installEventSemaphore.wait()
+
+                              if !AppConstantsMergn.shared.isAppLaunch {
+                                  AppConstantsMergn.shared.isAppLaunch = true
+                                  print("App Launched Successfully")
+                                  self.sendEvent(eventName: EventNames.appLaunched.rawValue, properties: [:])
+                              }
+                          } catch {
+                              // Catch any error that occurred during the event handling and handle it
+                              print("Error in app launch event handling: \(error.localizedDescription)")
+                          }
+                      }
+
+            } catch {
+                // Catch any error that occurred and handle it
+                print("Error adding app launch event: \(error.localizedDescription)")
+            }
+        }
+    }
+
+
+
 
 }
