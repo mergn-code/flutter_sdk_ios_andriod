@@ -87,7 +87,7 @@ class NetworkManager {
                 do {
                     let decoder = JSONDecoder()
                     let decodedResponse = try decoder.decode(T.self, from: data)
-                    print("Network Layer Decode Response \(decodedResponse)")
+                  //  print("Network Layer Decode Response \(decodedResponse)")
                     completion(.success(decodedResponse))
                 } catch {
                     completion(.failure(.decodingError))
