@@ -1,3 +1,3 @@
 ## 1.0.8
 
-Fixed jitpack.io dependency issue on client side app.
+Integrated System Events for the IOS App
