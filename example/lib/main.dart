@@ -11,23 +11,11 @@ Future<void> main() async {
   try {
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
-        options: FirebaseOptions(
-          apiKey: 'AIzaSyCkwUhjvskWK6o19jnSC3yd2Nkk-juSfTE',
-          appId: '1:301998040977:android:be0d9b2a1fe27b376ddc30',
-          messagingSenderId: '301998040977',
-          projectId: 'flutter-android-and-ios',
-          storageBucket: 'lutter-android-and-ios.firebasestorage.app',
-        ),
+        ,
       );
     } else if (Platform.isIOS) {
       await Firebase.initializeApp(
-        options: FirebaseOptions(
-          apiKey: 'AIzaSyAWVV1FmwcgX5FCLVpFJND7i0OqWhe-QiQ',
-          appId: '1:301998040977:ios:dc7a5a86ef16e3336ddc30',
-          messagingSenderId: '301998040977',
-          projectId: 'flutter-android-and-ios',
-          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
-        ),
+        ,
       );
     }
   } catch (e) {
@@ -148,7 +136,7 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
-          "787bc5fb1f13150564d187eb0bfaf1fbm35rgn303e547cb2e3b758a2f4a7ce810b10e3");
+          "");
     } on PlatformException catch (e) {
       print("Failed to register API: '${e.message}'.");
     } catch (e) {

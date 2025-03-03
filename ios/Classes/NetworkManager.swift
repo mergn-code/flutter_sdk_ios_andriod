@@ -30,12 +30,10 @@ class NetworkManager {
 
     private let session = URLSession.shared
    // private let baseURL = "https://devapi.mergn.com/sdk-management/api/"  // Replace with your API base URL
-    private let baseURL = "https://api.mergn.com/sdk-management/api/"  // Replace with your API base URL
 
     // Method to create headers for the API requests
     private func createHeaders() -> [String: String] {
         return [
-            "authorization": UserDefaults.standard.string(forKey: EventManager.shared.apiMergnKey) ?? "default_api_key",  // Replace with actual token // Hard corded
             "Content-Type": "application/json"
         ]
     }
@@ -102,99 +100,4 @@ class NetworkManager {
         }
     }
 
-    func getEventList(completion: @escaping (Result<EventListResponse, NetworkError>) -> Void) {
-        do {
-            try request(endpoint: "event", method: .get, responseType: EventListResponse.self, completion: completion)
-        } catch {
-            completion(.failure(.unknownError))  // Handle unexpected errors
-        }
-    }
-
-    func getAttributeList(completion: @escaping (Result<AttributeListResponse, NetworkError>) -> Void) {
-        do {
-            try request(endpoint: "attribute", method: .get, responseType: AttributeListResponse.self, completion: completion)
-        } catch {
-            completion(.failure(.unknownError))  // Handle unexpected errors
-        }
-    }
-
-    func postIdentification(requestBody: SetIdentificationRequest, completion: @escaping (Result<CustomerIdentificationResponse, NetworkError>) -> Void) {
-        do {
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(requestBody)
-
-            // Perform the network request using the generic helper function
-            try request(endpoint: "customer/set-identity", method: .post, body: jsonData, responseType: CustomerIdentificationResponse.self) { result in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            completion(.failure(.decodingError))  // Handle encoding error
-            print("Encoding Error: \(error)")
-        }
-    }
-
-    func recordEvent(requestBody: EventRequestModel.EventRequest, completion: @escaping (Result<AddEventResponse, NetworkError>) -> Void) {
-        do {
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(requestBody)
-
-            // Perform the network request using the generic helper function
-            try request(endpoint: "v2/event/record-event", method: .post, body: jsonData, responseType: AddEventResponse.self) { result in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            completion(.failure(.decodingError))  // Handle encoding error
-            print("Encoding Error: \(error)")
-        }
-    }
-
-    func recordAttribute(requestBody: AttributeRequestModel.AttributeRequest, completion: @escaping (Result<PostAttributeResponse, NetworkError>) -> Void) {
-        do {
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(requestBody)
-
-            // Perform the network request using the generic helper function
-            try request(endpoint: "attribute/set-attribute", method: .post, body: jsonData, responseType: PostAttributeResponse.self) { result in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            completion(.failure(.decodingError))  // Handle encoding error
-            print("Encoding Error: \(error)")
-        }
-    }
-
-    func postToken(requestBody: AppDeviceTokenRequest, completion: @escaping (Result<AddDeviceTokenResponse, NetworkError>) -> Void) {
-        do {
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(requestBody)
-
-            // Perform the network request using the generic helper function
-            try request(endpoint: "device/add-device-token-app", method: .put, body: jsonData, responseType: AddDeviceTokenResponse.self) { result in
-                switch result {
-                case .success(let response):
-                    completion(.success(response))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            completion(.failure(.decodingError))  // Handle encoding error
-            print("Encoding Error: \(error)")
-        }
-    }
-}
+   }
