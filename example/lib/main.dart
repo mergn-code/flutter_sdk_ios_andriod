@@ -11,11 +11,11 @@ Future<void> main() async {
   try {
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
-        ,
+
       );
     } else if (Platform.isIOS) {
       await Firebase.initializeApp(
-        ,
+
       );
     }
   } catch (e) {
