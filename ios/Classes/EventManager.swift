@@ -375,8 +375,8 @@ public func getAttributeValue(attributeId : String) -> String {
                         }
                         //Set identity Call complete
 
-                        DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
-                            // Putting 2 seconds delay make sure, set identity call should be first.
+                        DispatchQueue.global().asyncAfter(deadline: .now() + 3.0) {
+                            // Putting 3 seconds delay make sure, set identity call should be first.
                             do {
                                    try self.postAttributeToServer(attributeRequestModel: attributeRequestModel)
                                } catch {
