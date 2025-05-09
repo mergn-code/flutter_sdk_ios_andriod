@@ -15,12 +15,14 @@ struct AttributeListResponse: Codable {
     struct Attribute: Codable {
         let id: Int
         let name: String
+        let should_set_identity: Bool
         let attributeProperty: [String: String]  // Using [String: Any] for simplicity
 
         // Custom decoding to handle `Any` type for attributeProperty
         enum CodingKeys: String, CodingKey {
             case id
             case name
+            case should_set_identity
             case attributeProperty = "attribute_property"  // Adjust if needed
         }
 
@@ -29,6 +31,7 @@ struct AttributeListResponse: Codable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             id = try container.decode(Int.self, forKey: .id)
             name = try container.decode(String.self, forKey: .name)
+            should_set_identity = try container.decode(Bool.self, forKey: .should_set_identity)
 
             // Try decoding attributeProperty as a dictionary of [String: String] or [String: Int]
             if let attributePropertyData = try? container.decode([String: String].self, forKey: .attributeProperty) {

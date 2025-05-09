@@ -1,6 +1,6 @@
 Flutter SDK Merge
 
-This documentation provides integration steps and usage instructions for incorporating the Flutter SDK 1.0.6 into your Flutter project. Follow these steps to initialize the SDK, record events, and manage attributes within your application.
+This documentation provides integration steps and usage instructions for incorporating the Flutter SDK 2.0.1 into your Flutter project. Follow these steps to initialize the SDK, record events, and manage attributes within your application.
 
 ## Integration Steps
 
@@ -43,7 +43,7 @@ Use the AttributeManager to record attributes by providing an attribute name and
 
     String attributeName = "Email"; // eventName.text.toString()
 
-    String attributeValue = "fluttersdk@mergn.com";
+    String attributeValue = "fluttersdk@mergn.com"; // Example
 
     MethodChannelFlutterPlugin().sendAttribute(attributeName, attributeValue);
 
@@ -61,7 +61,7 @@ Record the login event when the user successfully logs in:
 
 Register the Firebase token to receive MERGN notifications:
 
-    MethodChannelFlutterPlugin().firebaseToken(fcmToken.toString());
+    MethodChannelFlutterPlugin().firebaseToken(fcmToken.toString()); // This firebase token
 
 
 This method should be called in any place where you would potentially land. Also, call this in onNewToken() and onRefreshToken() in your Firebase service.
@@ -122,10 +122,10 @@ Add the following code in app delegate under Runner folder
 
 ### Important Case
 
-There are three scenarios in the app where you need to send sign-in attributes and trigger the login event of the MERGN SDK:
+There are four scenarios in the app where you need to send sign-in attributes and trigger the login event of the MERGN SDK:
 
 1. When a new user creates a new account.
 2. When existing users log into the app.
 3. When the user is already logged in (important for capturing data of users who logged in previous versions of the app where the MERGN SDK was not integrated).
-
+4. When setting up an attribute which is also a identity i.e. mobile number, should call login event before sending the attribute.
 

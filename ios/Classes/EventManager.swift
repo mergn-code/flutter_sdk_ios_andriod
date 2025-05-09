@@ -167,7 +167,13 @@ public class EventManager {
    }
 
 
-
+public func getAttributeValue(attributeId : String) -> String {
+        guard let attrbiuteValue = UserDefaults.standard.string(forKey: attributeId), !attrbiuteValue.isEmpty else {
+            print("Attribute value is Empty")
+            return ""
+        }
+        return attrbiuteValue
+    }
 
 
     // Static method for posting identification
@@ -222,7 +228,7 @@ public class EventManager {
                     }
 
                     if propertiesEvent.keys.contains("sdk-version") {
-                        var newEventProperty2 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["sdk-version"]?.id ?? 0, value: "2")
+                        var newEventProperty2 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["sdk-version"]?.id ?? 0, value: "3")
                         eventProperties.append(newEventProperty2)
                     }
                 }
@@ -272,7 +278,7 @@ public class EventManager {
                     }
 
                     if propertiesEvent.keys.contains("sdk-version") {
-                        var newEventProperty2 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["sdk-version"]?.id ?? 0, value: "2")
+                        var newEventProperty2 = EventRequestModel.EventProperty(eventPropertyId: propertiesEvent["sdk-version"]?.id ?? 0, value: "3")
                         eventProperties.append(newEventProperty2)
                     }
                 }
@@ -347,6 +353,50 @@ public class EventManager {
     }
 
     public func sendAttribute(attributeName: String, attributeValue: String) {
+            do {
+                if attributeMap.isEmpty {
+                    getAttributeList()
+                    return
+                }
+                //In case of empty value, attribute will be recorded
+                if(attributeValue.isEmpty){return}
+
+                if attributeMap.keys.contains(attributeName) {
+                    var attributeRequestModel = AttributeRequestModel.AttributeRequest(
+                        customerId: getCustomerId(),
+                        attributeId: EventManager.shared.getAttribute(byName: attributeName)?.id ?? 0,
+                        value: attributeValue
+                    )
+                    //In case of same attribute value attribute will not trigger
+                    if(self.getAttributeValue(attributeId: String(attributeRequestModel.attributeId)) != attributeValue){
+                        //In case attribute property value set_identity = true, should call set identity
+                        if(EventManager.shared.getAttribute(byName: attributeName)?.should_set_identity ?? false){
+                            self.postIdentification(identity: attributeValue)
+                        }
+                        //Set identity Call complete
+
+                        DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+                            // Putting 2 seconds delay make sure, set identity call should be first.
+                            do {
+                                   try self.postAttributeToServer(attributeRequestModel: attributeRequestModel)
+                               } catch {
+                                   print("Error posting attributes to server: \(error)")
+                               }
+                        }
+
+                    }
+                    else {
+                        print("Attribute value is same as previous")
+                    }
+
+
+                }
+            } catch {
+                print("Error in sendAttribute: \(error)")
+            }
+        }
+
+    /*public func sendAttribute(attributeName: String, attributeValue: String) {
         do {
             if attributeMap.isEmpty {
                 getAttributeList()
@@ -365,7 +415,7 @@ public class EventManager {
         } catch {
             print("Error in sendAttribute: \(error)")
         }
-    }
+    }*/
 
     func postAttributeToServer(attributeRequestModel: AttributeRequestModel.AttributeRequest) {
         do {
@@ -409,7 +459,7 @@ public class EventManager {
         }
     }
 
-    public func firebaseToken(token: String) {
+    /*public func firebaseToken(token: String) {
         do {
             print(token)
             saveFirebaseToken(token: token)
@@ -420,7 +470,29 @@ public class EventManager {
         } catch {
             print("Error in firebaseToken: \(error)")
         }
-    }
+    }*/
+
+       public func firebaseToken(token: String) {
+            do {
+                print(token)
+                saveFirebaseToken(token: token)
+                if token.isEmpty {
+                    return
+                }
+                //first time TokenManager.shared.authToken always be empty b/c we want to push token to the server
+                //when app launches
+                //If token changed, it will call it again
+                let lastToken = TokenManager.shared.authToken ?? ""
+                if(TokenManager.shared.authToken == token){
+                    return
+                }
+                TokenManager.shared.authToken = token
+                //End of token maintaining implementation
+                postDeviceToken()
+            } catch {
+                print("Error in firebaseToken: \(error)")
+            }
+        }
 
     func postDeviceToken() {
         do {
@@ -565,6 +637,14 @@ public class EventManager {
                 print("Error adding app launch event: \(error.localizedDescription)")
             }
         }
+    }
+
+    final class TokenManager {
+        static let shared = TokenManager()
+
+        private init() {} // Prevent external initialization
+
+        var authToken: String?
     }
 
 

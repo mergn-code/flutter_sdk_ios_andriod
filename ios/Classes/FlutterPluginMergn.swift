@@ -9,7 +9,24 @@ public class FlutterPluginMergn: NSObject, FlutterPlugin {
         let instance = FlutterPluginMergn()
 
         registrar.addMethodCallDelegate(instance, channel: channel)
-    }
+
+        // Use guard to check if we have a valid FlutterViewController
+            guard let flutterViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController else {
+                // If rootViewController is not available or cannot be cast, log and exit
+                print("Error: rootViewController is not of type FlutterViewController.")
+                return // Exit early if condition fails
+            }
+
+            // Proceed with the next operation if guard passes
+            do {
+                // Now attempt to interact with the SDKManager (e.g., setting the current view controller)
+                try SDKManager.shared.setCurrentViewController(flutterViewController)
+                print("Successfully set the current view controller.")
+            } catch {
+                // Catch any errors that may occur during the SDKManager operation
+                print("Error: Failed to set current view controller in SDKManager. \(error.localizedDescription)")
+            }
+            }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {

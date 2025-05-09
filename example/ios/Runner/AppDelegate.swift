@@ -10,9 +10,9 @@ import mergn_flutter_plugin
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
 
-        if let flutterViewController = window?.rootViewController as? FlutterViewController {
+       /* if let flutterViewController = window?.rootViewController as? FlutterViewController {
             SDKManager.shared.setCurrentViewController(flutterViewController)
-        }
+        }*/
         UNUserNotificationCenter.current().delegate = self
 
         // Register Flutter plugins

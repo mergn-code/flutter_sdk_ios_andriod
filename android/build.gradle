@@ -64,13 +64,36 @@ android {
         consumerProguardFiles 'src/main/proguard-rules.txt'
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+            //shrinkResources true
+            consumerProguardFiles 'proguard-rules.pro'
+            // Customize Proguard/R8 settings here
+           // minifyEnabled true // Ensure minification is enabled for the release build
+
+            // Add proguard rules for specific file exclusions
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            //shrinkResources true
+            consumerProguardFiles 'proguard-rules.pro'
+            // Customize Proguard/R8 settings here
+            // minifyEnabled true // Ensure minification is enabled for the release build
+
+            // Add proguard rules for specific file exclusions
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
 
         //implementation 'com.github.mergn-code:mergn-sdk-android:2.4.2'
         //implementation 'com.github.mergn-code:mergn-sdk-android:2.7.2'
-        implementation 'com.github.mergn-code:mergn-sdk-android:2.8.5'
+        implementation 'com.github.mergn-code:mergn-sdk-android:3.5.3'
         implementation "androidx.room:room-runtime:2.4.0"
         implementation "com.squareup.retrofit2:retrofit:2.9.0"
         implementation "com.squareup.retrofit2:converter-gson:2.9.0"

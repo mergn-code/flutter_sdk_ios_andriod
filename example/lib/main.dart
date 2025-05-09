@@ -5,24 +5,56 @@ import 'package:flutter/services.dart';
 import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:mergn_flutter_plugin/MergnNotificationService.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    if (Platform.isAndroid) {
-      await Firebase.initializeApp(
 
-      );
-    } else if (Platform.isIOS) {
-      await Firebase.initializeApp(
-
-      );
-    }
-  } catch (e) {
-    print("Failed to initialize Firebase: $e");
-  }
   runApp(MyApp());
 }
+
+Future<void> initLocalNotification() async {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  // Initialization settings for Android
+  var android = AndroidInitializationSettings('app_icon'); // Use your app's icon
+
+  // Initialization settings for iOS
+  var ios = DarwinInitializationSettings();
+
+  // Combine both settings into one InitializationSettings object
+  var initSettings = InitializationSettings(
+    android: android,
+    iOS: ios,
+  );
+
+  // Initialize the local notifications plugin
+  await flutterLocalNotificationsPlugin.initialize(initSettings);
+}
+
+void showNotification(RemoteMessage message) async {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  var android = AndroidNotificationDetails(
+    'your_channel_id',
+    'your_channel_name',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
+
+  var ios = DarwinNotificationDetails();
+
+  var platform = NotificationDetails(android: android, iOS: ios);
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    message.notification?.title,
+    message.notification?.body,
+    platform,
+  );
+}
+
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -49,6 +81,23 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
   final TextEditingController _eventNameController = TextEditingController();
   final TextEditingController _dynamicAttributeController = TextEditingController();
   final TextEditingController _identityController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Received a message: ${message.data}');
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('Notification clicked: ${message.notification?.title}');
+    });
+    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+      if (message != null) {
+        print('App opened via notification: ${message.notification?.title}');
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +184,19 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     final clientApiKey = 'api key'; // Hardcoded API key
 
     try {
+     // MergnNotificationService().initialize();
       await MethodChannelFlutterPlugin().registerAPICall(
-          "");
+
+          "API KEY");
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('Received a message: ${message.notification?.title}');
+        // Handle notification
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        print('Notification clicked: ${message.notification?.title}');
+        // Navigate or perform any actions when notification is opened
+      });
     } on PlatformException catch (e) {
       print("Failed to register API: '${e.message}'.");
     } catch (e) {
@@ -146,7 +206,7 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
   // Function to send Event to iOS with hardcoded event name 'Product_Clicked'
   Future<void> _sendEvent() async {
-    final eventName = "Product_Clicked"; // Hardcoded event name
+    final eventName = "Event Name;
     final eventProperties = {
       "category": "test-flutter"
     }; // Sample event properties
@@ -168,8 +228,9 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     if (dynamicAttributeValue.isNotEmpty) {
       try {
         await MethodChannelFlutterPlugin().sendAttribute(
-            "Email", dynamicAttributeValue);
-        print("Attribute Sent: Email = $dynamicAttributeValue");
+
+            "Attribute Name", dynamicAttributeValue);
+        print("Attribute Sent: email = $dynamicAttributeValue");
       } on PlatformException catch (e) {
         print("Failed to send attribute: '${e.message}'.");
       } catch (e) {
@@ -217,4 +278,16 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
       print("Failed to get tokens: $e");
     }
   }
+
+  void requestPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
+
 }
