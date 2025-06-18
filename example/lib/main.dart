@@ -1,60 +1,115 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-//import 'package:mergn_flutter_plugin/MergnNotificationService.dart';
+import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  try {
+    if (Platform.isAndroid) {
+      await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: 'AIzaSyCkwUhjvskWK6o19jnSC3yd2Nkk-juSfTE',
+          appId: '1:301998040977:android:be0d9b2a1fe27b376ddc30',
+          messagingSenderId: '301998040977',
+          projectId: 'flutter-android-and-ios',
+          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
+        ),
+      );
+    } else if (Platform.isIOS) {
+      await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: 'AIzaSyAWVV1FmwcgX5FCLVpFJND7i0OqWhe-QiQ',
+          appId: '1:301998040977:ios:dc7a5a86ef16e3336ddc30',
+          messagingSenderId: '301998040977',
+          projectId: 'flutter-android-and-ios',
+          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
+        ),
+      );
+    }
+    await initLocalNotification();
+  } catch (e) {
+    print("Failed to initialize Firebase: $e");
+  }
   runApp(MyApp());
 }
 
 Future<void> initLocalNotification() async {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
-  // Initialization settings for Android
-  var android = AndroidInitializationSettings('app_icon'); // Use your app's icon
-
-  // Initialization settings for iOS
+  var android = AndroidInitializationSettings('app_icon');
   var ios = DarwinInitializationSettings();
+  var initSettings = InitializationSettings(android: android, iOS: ios);
 
-  // Combine both settings into one InitializationSettings object
-  var initSettings = InitializationSettings(
-    android: android,
-    iOS: ios,
-  );
-
-  // Initialize the local notifications plugin
   await flutterLocalNotificationsPlugin.initialize(initSettings);
 }
 
 void showNotification(RemoteMessage message) async {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
-  var android = AndroidNotificationDetails(
-    'your_channel_id',
-    'your_channel_name',
-    importance: Importance.max,
-    priority: Priority.high,
-  );
+  final String? imageUrl = message.data['image'];
 
-  var ios = DarwinNotificationDetails();
+  AndroidNotificationDetails androidDetails;
 
-  var platform = NotificationDetails(android: android, iOS: ios);
+  if (imageUrl != null && imageUrl.isNotEmpty) {
+    try {
+      final http.Response response = await http.get(Uri.parse(imageUrl));
+      final Directory tempDir = await getTemporaryDirectory();
+      final String filePath = '${tempDir.path}/image.jpg';
+      final File file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      final BigPictureStyleInformation bigPicture = BigPictureStyleInformation(
+        FilePathAndroidBitmap(filePath),
+        contentTitle: message.data['title'],
+        summaryText: message.data['body'],
+      );
+
+      androidDetails = AndroidNotificationDetails(
+        'image_channel',
+        'Image Notifications',
+        channelDescription: 'Notifications with images',
+        importance: Importance.max,
+        priority: Priority.high,
+        styleInformation: bigPicture,
+      );
+    } catch (e) {
+      print("Image load failed: $e");
+      androidDetails = AndroidNotificationDetails(
+        'default_channel',
+        'Default Notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+    }
+  } else {
+    androidDetails = AndroidNotificationDetails(
+      'default_channel',
+      'Default Notifications',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+  }
+
+  const ios = DarwinNotificationDetails();
+  final platform = NotificationDetails(android: androidDetails, iOS: ios);
 
   await flutterLocalNotificationsPlugin.show(
     0,
-    message.notification?.title,
-    message.notification?.body,
+    message.data['title'],
+    message.data['body'],
     platform,
   );
 }
-
-
 
 class MyApp extends StatelessWidget {
   @override
@@ -77,27 +132,16 @@ class EventManagerScreen extends StatefulWidget {
 class _EventManagerScreenState extends State<EventManagerScreen> {
   String? _token;
 
-  // Text field controllers
   final TextEditingController _eventNameController = TextEditingController();
-  final TextEditingController _dynamicAttributeController = TextEditingController();
+  final TextEditingController _dynamicAttributeController =
+  TextEditingController();
   final TextEditingController _identityController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     requestPermission();
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Received a message: ${message.data}');
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('Notification clicked: ${message.notification?.title}');
-    });
-    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
-      if (message != null) {
-        print('App opened via notification: ${message.notification?.title}');
-      }
-    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -108,17 +152,12 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Register API Button
             ElevatedButton(
               onPressed: _registerApi,
               child: Text('Register API'),
             ),
             SizedBox(height: 10),
-
-            // Event Name Display
             Text('Event Name:',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             TextField(
@@ -129,8 +168,6 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
               ),
             ),
             SizedBox(height: 20),
-
-            // Dynamic Attribute TextField
             Text('Dynamic Attribute:',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             TextField(
@@ -141,8 +178,6 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
               ),
             ),
             SizedBox(height: 20),
-
-            // Identity TextField
             Text('Identity:',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             TextField(
@@ -153,22 +188,16 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
               ),
             ),
             SizedBox(height: 20),
-
-            // Send Event Button
             ElevatedButton(
               onPressed: _sendEvent,
               child: Text('Send Event'),
             ),
             SizedBox(height: 10),
-
-            // Send Attribute Button
             ElevatedButton(
               onPressed: _sendAttribute,
               child: Text('Send Attribute'),
             ),
             SizedBox(height: 10),
-
-            // Send Identity Button
             ElevatedButton(
               onPressed: _sendIdentity,
               child: Text('Send Identity'),
@@ -179,23 +208,19 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     );
   }
 
-  // Function to register the API with a hardcoded clientApiKey
   Future<void> _registerApi() async {
-    final clientApiKey = 'api key'; // Hardcoded API key
-
+    final clientApiKey = 'api key';
     try {
-     // MergnNotificationService().initialize();
       await MethodChannelFlutterPlugin().registerAPICall(
+          "4f3f1e5562611f5a612c644d778a4a6cm238rgn4b5d59d9d1350b77f880425a7fcd88d0");
 
-          "API KEY");
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('Received a message: ${message.notification?.title}');
-        // Handle notification
+        print('Received a message: ${message.data['title']}');
+        showNotification(message);
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         print('Notification clicked: ${message.notification?.title}');
-        // Navigate or perform any actions when notification is opened
       });
     } on PlatformException catch (e) {
       print("Failed to register API: '${e.message}'.");
@@ -204,12 +229,9 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     }
   }
 
-  // Function to send Event to iOS with hardcoded event name 'Product_Clicked'
   Future<void> _sendEvent() async {
-    final eventName = "Event Name;
-    final eventProperties = {
-      "category": "test-flutter"
-    }; // Sample event properties
+    final eventName = "Request Send";
+    final eventProperties = {"category": "test-flutter"};
 
     try {
       await MethodChannelFlutterPlugin().sendEvent(eventName, eventProperties);
@@ -221,16 +243,12 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     }
   }
 
-  // Function to send Attribute to iOS
   Future<void> _sendAttribute() async {
-    final dynamicAttributeValue = _dynamicAttributeController.text;
-
-    if (dynamicAttributeValue.isNotEmpty) {
+    final value = _dynamicAttributeController.text;
+    if (value.isNotEmpty) {
       try {
-        await MethodChannelFlutterPlugin().sendAttribute(
-
-            "Attribute Name", dynamicAttributeValue);
-        print("Attribute Sent: email = $dynamicAttributeValue");
+        await MethodChannelFlutterPlugin().sendAttribute("email", value);
+        print("Attribute Sent: email = $value");
       } on PlatformException catch (e) {
         print("Failed to send attribute: '${e.message}'.");
       } catch (e) {
@@ -241,7 +259,6 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     }
   }
 
-  // Function to send Identity to iOS
   Future<void> _sendIdentity() async {
     final identity = _identityController.text;
     getToken();
@@ -261,13 +278,7 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
   void getToken() async {
     try {
-      // String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-      // print('APNS Token: $apnsToken');
-      // await Future.delayed(Duration(seconds: 2));
-
-      // Get the FCM token for the device
       String? fcmToken = await FirebaseMessaging.instance.getToken();
-
       if (fcmToken != null) {
         print("FCM Token: $fcmToken");
         await MethodChannelFlutterPlugin().firebaseToken(fcmToken);
@@ -288,6 +299,4 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     );
     print('User granted permission: ${settings.authorizationStatus}');
   }
-
-
 }
