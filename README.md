@@ -117,8 +117,17 @@ Add the following code in app delegate under Runner folder
     }
     }
 
+### Proguard Rules
+
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
 
+-if interface * { @retrofit2.http.* public *** *(...); }
+-keep,allowoptimization,allowshrinking,allowobfuscation class <3>
+
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
 
 ### Important Case
 
