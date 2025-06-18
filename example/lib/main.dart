@@ -15,24 +15,10 @@ Future<void> main() async {
   try {
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
-        options: FirebaseOptions(
-          apiKey: 'AIzaSyCkwUhjvskWK6o19jnSC3yd2Nkk-juSfTE',
-          appId: '1:301998040977:android:be0d9b2a1fe27b376ddc30',
-          messagingSenderId: '301998040977',
-          projectId: 'flutter-android-and-ios',
-          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
-        ),
+
       );
     } else if (Platform.isIOS) {
-      await Firebase.initializeApp(
-        options: FirebaseOptions(
-          apiKey: 'AIzaSyAWVV1FmwcgX5FCLVpFJND7i0OqWhe-QiQ',
-          appId: '1:301998040977:ios:dc7a5a86ef16e3336ddc30',
-          messagingSenderId: '301998040977',
-          projectId: 'flutter-android-and-ios',
-          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
-        ),
-      );
+
     }
     await initLocalNotification();
   } catch (e) {
@@ -52,64 +38,7 @@ Future<void> initLocalNotification() async {
   await flutterLocalNotificationsPlugin.initialize(initSettings);
 }
 
-void showNotification(RemoteMessage message) async {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
 
-  final String? imageUrl = message.data['image'];
-
-  AndroidNotificationDetails androidDetails;
-
-  if (imageUrl != null && imageUrl.isNotEmpty) {
-    try {
-      final http.Response response = await http.get(Uri.parse(imageUrl));
-      final Directory tempDir = await getTemporaryDirectory();
-      final String filePath = '${tempDir.path}/image.jpg';
-      final File file = File(filePath);
-      await file.writeAsBytes(response.bodyBytes);
-
-      final BigPictureStyleInformation bigPicture = BigPictureStyleInformation(
-        FilePathAndroidBitmap(filePath),
-        contentTitle: message.data['title'],
-        summaryText: message.data['body'],
-      );
-
-      androidDetails = AndroidNotificationDetails(
-        'image_channel',
-        'Image Notifications',
-        channelDescription: 'Notifications with images',
-        importance: Importance.max,
-        priority: Priority.high,
-        styleInformation: bigPicture,
-      );
-    } catch (e) {
-      print("Image load failed: $e");
-      androidDetails = AndroidNotificationDetails(
-        'default_channel',
-        'Default Notifications',
-        importance: Importance.max,
-        priority: Priority.high,
-      );
-    }
-  } else {
-    androidDetails = AndroidNotificationDetails(
-      'default_channel',
-      'Default Notifications',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-  }
-
-  const ios = DarwinNotificationDetails();
-  final platform = NotificationDetails(android: androidDetails, iOS: ios);
-
-  await flutterLocalNotificationsPlugin.show(
-    0,
-    message.data['title'],
-    message.data['body'],
-    platform,
-  );
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -212,11 +141,11 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     final clientApiKey = 'api key';
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
-          "4f3f1e5562611f5a612c644d778a4a6cm238rgn4b5d59d9d1350b77f880425a7fcd88d0");
+          "");
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print('Received a message: ${message.data['title']}');
-        showNotification(message);
+
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
