@@ -608,7 +608,7 @@ public func getAttributeValue(attributeId : String) -> String {
         }
     }*/
 
-       public func firebaseToken(token: String) {
+    public func firebaseToken(token: String) {
             do {
                 print(token)
                 saveFirebaseToken(token: token)

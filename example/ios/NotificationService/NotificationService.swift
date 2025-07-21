@@ -6,6 +6,7 @@
 //
 
 import UserNotifications
+import FirebaseMessaging
 //import mergn_flutter_plugin
 
 class NotificationService: UNNotificationServiceExtension {
