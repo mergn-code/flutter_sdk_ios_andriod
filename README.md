@@ -121,7 +121,7 @@ Add the following code in app delegate under Runner folder
 -Add the Notification Extension Service from xcode
 
     import UserNotifications
-    import mergn_ios
+    
 
     class NotificationService: UNNotificationServiceExtension {
 
@@ -132,7 +132,7 @@ Add the following code in app delegate under Runner folder
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
-        EventManager.shared.notificationViewed(notificationData: request)
+        
 
         // Check for the media URL
         if let mediaUrlString = request.content.userInfo["image"] as? String,
