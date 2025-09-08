@@ -40,7 +40,9 @@ import mergn_flutter_plugin
     override func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // Process remote notification
         print("Received notification in the background: \(userInfo)")
-        EventManager.shared.notificationViewed(notificationData: userInfo.request)
+        //EventManager.shared.notificationViewed(notificationData: userInfo.values)
         completionHandler(.newData)
     }
+    
+
 }

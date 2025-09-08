@@ -35,6 +35,27 @@ Use the EventManager to record events by providing an event name and properties:
 
     MethodChannelFlutterPlugin().sendEvent(eventName, eventProperties);
 
+If the property type is array, set value according to this:
+
+
+    String eventName = "Event Name";
+    // ✅ Map for event properties
+    Map<String, String> eventPropertiesMap = {};
+
+    List<String> stringArray = [
+    "Value1",
+    "Value2",
+    "Value3"
+    ]; // Example
+    
+Convert it into json
+
+    eventPropertiesMap[
+    "request-names"
+    ] = jsonEncode(stringArray);
+
+    MethodChannelFlutterPlugin().sendEvent(eventName, eventPropertiesMap);
+
 
 ### 3. Record Attributes
 

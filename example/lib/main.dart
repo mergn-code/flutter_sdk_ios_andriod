@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -5,38 +6,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     if (Platform.isAndroid) {
-      await Firebase.initializeApp(
 
-      );
     } else if (Platform.isIOS) {
 
     }
-    await initLocalNotification();
+   // await initLocalNotification();
   } catch (e) {
     print("Failed to initialize Firebase: $e");
   }
   runApp(MyApp());
 }
 
-Future<void> initLocalNotification() async {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
-
-  var android = AndroidInitializationSettings('app_icon');
-  var ios = DarwinInitializationSettings();
-  var initSettings = InitializationSettings(android: android, iOS: ios);
-
-  await flutterLocalNotificationsPlugin.initialize(initSettings);
-}
+// Future<void> initLocalNotification() async {
+//   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//   FlutterLocalNotificationsPlugin();
+//
+//   var android = AndroidInitializationSettings('app_icon');
+//   var ios = DarwinInitializationSettings();
+//   var initSettings = InitializationSettings(android: android, iOS: ios);
+//
+//   await flutterLocalNotificationsPlugin.initialize(initSettings);
+// }
 
 
 
@@ -136,12 +135,11 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
       ),
     );
   }
-
   Future<void> _registerApi() async {
-    final clientApiKey = 'api key';
+
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
-          "");
+          clientApiKey);
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print('Received a message: ${message.data['title']}');
@@ -160,10 +158,21 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
 
   Future<void> _sendEvent() async {
     final eventName = "Request Send";
-    final eventProperties = {"category": "test-flutter"};
+    final eventProperties = {"products-ordered": "test-flutter"};
+
+    // ✅ Map for event properties
+    Map<String, String> eventPropertiesMap = {};
+
+    // ✅ String array
+    List<String> stringArray = ["Tester", "Tester2", "tester3"];
+    eventPropertiesMap["request-names"] = jsonEncode(stringArray);
+    eventPropertiesMap["recipient-gender"] = "male";
+
+    // If your SDK accepts a List directly
+   // eventPropertiesMap["request-names"] = stringArray;
 
     try {
-      await MethodChannelFlutterPlugin().sendEvent(eventName, eventProperties);
+      await MethodChannelFlutterPlugin().sendEvent(eventName, eventPropertiesMap);
       print("Event Sent: $eventName");
     } on PlatformException catch (e) {
       print("Failed to send event: '${e.message}'.");

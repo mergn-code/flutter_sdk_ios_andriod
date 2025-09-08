@@ -298,6 +298,7 @@ public func getAttributeValue(attributeId : String) -> String {
             }
 
             if eventMap.keys.contains(eventName) {
+                var isParseRequest = false
                 var eventDetails = EventManager.shared.getEvent(byName: eventName)
                 var eventId: Int = eventDetails?.id ?? 0
                 var eventProperties: [EventRequestModel.EventProperty] = []
@@ -305,7 +306,17 @@ public func getAttributeValue(attributeId : String) -> String {
                 if let propertiesEvent = eventDetails?.eventProperty {
                     for (key, property) in propertiesEvent {
                         if properties.keys.contains(property.name) {
-                            var newEventProperty = EventRequestModel.EventProperty(eventPropertyId: property.id, value: properties[property.name] as? String ?? "")
+                            var isParse = false
+
+                            var propertyValue = self.returnStringValue(properties[property.name])
+
+                            if property.data_type == "array" {
+                                // do something here
+                                print("It's an array type")
+                                isParse = true
+                                isParseRequest = true
+                            }
+                            var newEventProperty = EventRequestModel.EventProperty(eventPropertyId: property.id, value: propertyValue, isParse: isParse)
                             eventProperties.append(newEventProperty)
                         }
                     }
@@ -326,7 +337,8 @@ public func getAttributeValue(attributeId : String) -> String {
                 var eventModel = EventRequestModel.Event(
                     eventId: eventId,
                     eventProperties: eventProperties,
-                    sessionId: getUniqueIdentifier()
+                    sessionId: getUniqueIdentifier(),
+                    isParse: isParseRequest
                 )
 
                 var eventModelList: [EventRequestModel.Event] = [eventModel]
@@ -430,43 +442,20 @@ public func getAttributeValue(attributeId : String) -> String {
 
     func postEventToServer(eventRequestModel: EventRequestModel.EventRequest) {
         do {
-            var requestBody = eventRequestModel
+            let requestBody = eventRequestModel
+            print("Request Model: \(requestBody)")
 
             NetworkManager.shared.recordEvent(requestBody: requestBody) { result in
                 switch result {
                 case .success(let response):
-                    print("Post Record Event Successful: \(response.data)")
-                    self.campaing = response.data
-                    let currentVC = SDKManager.shared.getCurrentViewController()
-
-                    DispatchQueue.main.async {
-                        do{
-
-                            if !self.campaing.campaigns.isEmpty {
-                                self.campaignId = String(self.campaing.campaigns.first?.campaignId ?? 0)
-                                self.campaignInstanceId = self.campaing.campaigns.first?.campaignCustomerInstanceId ?? ""
-//                                if let currentVC = currentVC {
-//                                    // Now currentVC is safely unwrapped and can be used
-//                                    self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
-//                                } else {
-//                                    print("currentVC is nil")
-//                                }
-
-                                guard let currentVC = currentVC else {
-                                            throw EventManagerError.unknownError
-                                        }
-
-                                        // Now call the openWebView method which may throw an error
-                                        try self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
-                                print("Campaign Id: \(self.campaing.campaigns.first?.campaignId)")
-                                UserDefaults.standard.set(String(self.campaing.campaigns.first?.campaignId ?? 0000), forKey: "campaignIdMergn")
-                            }
-                        }
-                        catch  let error {
-                            // Handle and print the error thrown from the do block
-                            print("Error in showing campaign: \(error)")
-                        }
+                    print("Post Record Event Successful: \(response)")
+                    guard let data = response.data else {
+                        //print("Event Response : \(response)")
+                        return
                     }
+
+                    self.showCampaign(response: response);
+
                 case .failure(let error):
                     print("Error posting Record Event: \(error)")
                 }
@@ -475,6 +464,59 @@ public func getAttributeValue(attributeId : String) -> String {
             print("Error in postEventToServer: \(error)")
         }
     }
+
+func showCampaign(response:AddEventResponse ){
+        guard let data = response.data else {
+            //print("Event Response : \(response)")
+            return
+        }
+
+        self.campaing = data
+        //Comment because added new logic for getting UI context for native
+        //required for flutter
+        let currentVC = SDKManager.shared.getCurrentViewController()
+
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            do {
+
+                if !self.campaing.campaigns.isEmpty {
+                    self.campaignId = String(self.campaing.campaigns.first?.campaignId ?? 0)
+                    self.campaignInstanceId = self.campaing.campaigns.first?.campaignCustomerInstanceId ?? ""
+                    //for Flutter
+                                    if let currentVC = currentVC {
+                                        // Now currentVC is safely unwrapped and can be used
+                                        self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
+                                    } else {
+                                        print("currentVC is nil")
+                                    }
+
+                                    guard let currentVC = currentVC else {
+                                                throw EventManagerError.unknownError
+                                            }
+//                    //for native
+//                    guard let topVC = UIApplication.topViewController() else {
+//                                print("❌ No top view controller found to present in-app.")
+//                                return
+//                            }
+
+                            // Now call the openWebView method which may throw an error
+                    //for flutter
+                    try self.openWebView(from: currentVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
+                    // for native
+                    //try self.openWebView(from: topVC, htmlString: self.campaing.campaigns.first?.message?.design ?? "")
+                    print("Campaign Id: \(self.campaing.campaigns.first?.campaignId)")
+                    UserDefaults.standard.set(String(self.campaing.campaigns.first?.campaignId ?? 0000), forKey: "campaignIdMergn")
+                }
+            }
+            catch  let error {
+                // Handle and print the error thrown from the do block
+                print("Error in showing campaign: \(error)")
+            }
+        }
+    }
+
 
     public func sendAttribute(attributeName: String, attributeValue: String) {
             do {
@@ -608,9 +650,9 @@ public func getAttributeValue(attributeId : String) -> String {
         }
     }*/
 
-    public func firebaseToken(token: String) {
+       public func firebaseToken(token: String) {
             do {
-                print(token)
+                //print(token)
                 saveFirebaseToken(token: token)
                 if token.isEmpty {
                     return
@@ -781,6 +823,31 @@ public func getAttributeValue(attributeId : String) -> String {
 
         var authToken: String?
     }
+
+
+    func returnStringValue(_ value: Any?) -> String {
+        guard let value = value else { return "" }
+
+        switch value {
+        case let str as String:
+            return str
+        case let arr as [String]:
+            if let data = try? JSONSerialization.data(withJSONObject: arr, options: []),
+                      let json = String(data: data, encoding: .utf8) {
+                       return json // ["Sandwiches","Burger","Paratha Roll"]
+                   }
+                   return ""
+        case let int as Int:
+            return String(int)
+        case let double as Double:
+            return String(double)
+        case let bool as Bool:
+            return String(bool)
+        default:
+            return "" // fallback
+        }
+    }
+
 
 
 

@@ -11,9 +11,10 @@ struct EventRequestModel{
     // MARK: - EventProperty
     struct EventProperty: Codable {
         let eventPropertyId: Int
-        let value: String
+        var value: String? = nil
+        var isParse: Bool? = false
     }
-    
+
     // MARK: - Event
     struct Event: Codable {
         let eventId: Int
@@ -22,13 +23,15 @@ struct EventRequestModel{
         var campaignCustomerInstanceId: String? = nil
         var campaignId: String? = nil
         var name: String? = nil
+        var isParse: Bool? = false
     }
-    
+
     // MARK: - EventRequest
     struct EventRequest: Codable {
         let customerId: String
         let deviceId: String
         let events: [Event]
     }
-    
+
 }
+

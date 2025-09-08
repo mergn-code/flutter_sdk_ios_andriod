@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -40,14 +40,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		B015D0C22DDDFAB8006348DD /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 				B03089812E016F5700FA7E7A /* NotificationService.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -249,12 +249,12 @@
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
 				D80165EDBACB5ED4FD75B901 /* [CP] Check Pods Manifest.lock */,
+				B015D0C22DDDFAB8006348DD /* Embed Foundation Extensions */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				B015D0C22DDDFAB8006348DD /* Embed Foundation Extensions */,
 				E114193A59722C4EEBBF7D0A /* [CP] Embed Pods Frameworks */,
 				BD8133392C13A085042534BD /* [CP] Copy Pods Resources */,
 			);

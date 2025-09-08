@@ -11,7 +11,7 @@ import Foundation
 struct AddEventResponse: Codable {
     let success: Bool
     let message: String
-    let data: Campaigns
+    var data: Campaigns? = nil
 }
 
 // MARK: - Campaigns
