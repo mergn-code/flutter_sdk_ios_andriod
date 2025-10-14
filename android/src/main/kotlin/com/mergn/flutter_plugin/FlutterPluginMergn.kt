@@ -31,7 +31,7 @@ class FlutterPluginMergn : FlutterPlugin, MethodChannel.MethodCallHandler, Activ
                     val apiKey = call.argument<String>("apiKey")
                     val eventManager = EventManager()
                     eventManager.registerApiKey(apiKey.toString(), applicationContext)
-                    result.success(apiKey)
+                    result.success("Registered Successfully")
                 }
                 "sendEvent" -> {
                     val eventManager = EventManager()

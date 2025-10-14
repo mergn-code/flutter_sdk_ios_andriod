@@ -126,7 +126,7 @@ public class FlutterPluginMergn: NSObject, FlutterPlugin {
                             }
 
                             // Handle register API
-                            print("Received token: \(token)")
+                          //  print("Received token: \(token)")
                             EventManager.shared.firebaseToken(token: token)
                             result("fcm_token called")
                         } catch let error as FlutterPluginError {

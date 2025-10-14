@@ -136,7 +136,8 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     );
   }
   Future<void> _registerApi() async {
-
+    //final clientApiKey = 'b4fe9fd760d4071ecac7c3ed919b07c1m39rgnc4e3b260c20e663da839b4bbb423210c';
+    final clientApiKey = 'Api key';
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
           clientApiKey);
@@ -218,7 +219,7 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     try {
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken != null) {
-        print("FCM Token: $fcmToken");
+       // print("FCM Token: $fcmToken");
         await MethodChannelFlutterPlugin().firebaseToken(fcmToken);
       } else {
         print("Failed to get FCM token");
