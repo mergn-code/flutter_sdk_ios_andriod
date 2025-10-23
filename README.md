@@ -1,6 +1,6 @@
 Flutter SDK Merge
 
-This documentation provides integration steps and usage instructions for incorporating the Flutter SDK 2.0.1 into your Flutter project. Follow these steps to initialize the SDK, record events, and manage attributes within your application.
+This documentation provides integration steps and usage instructions for incorporating the Flutter SDK 2.1.2 into your Flutter project. Follow these steps to initialize the SDK, record events, and manage attributes within your application.
 
 ## Integration Steps
 
@@ -228,6 +228,17 @@ Add the following code in app delegate under Runner folder
     -keep,allowobfuscation,allowshrinking class retrofit2.Response
     -keep class com.google.gson.reflect.TypeToken { *; }
     -keep class * extends com.google.gson.reflect.TypeToken
+    # Keep the Mergn Flutter plugin class
+    -keep class com.mergn.flutter_plugin.FlutterPluginMergn { *; }
+
+    -assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** i(...);
+    public static *** w(...);
+    public static *** e(...);
+    public static *** v(...);
+    public static *** wtf(...);
+    }
 
 ### Important Case
 

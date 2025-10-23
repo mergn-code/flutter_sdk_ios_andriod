@@ -66,14 +66,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            //minifyEnabled true
          //   shrinkResources true
             consumerProguardFiles 'proguard-rules.pro'
             // Customize Proguard/R8 settings here
          //    minifyEnabled true // Ensure minification is enabled for the release build
 
             // Add proguard rules for specific file exclusions
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false

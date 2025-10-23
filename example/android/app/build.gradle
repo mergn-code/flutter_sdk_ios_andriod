@@ -25,7 +25,9 @@ if (flutterVersionName == null) {
 android {
     namespace "com.mergn.flutter_plugin_example"
     compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    //ndkVersion flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -76,8 +78,8 @@ android {
             // minifyEnabled false
             //shrinkResources true
             //proguardFiles 'proguard-rules.txt'
-            minifyEnabled true
-            shrinkResources true
+         //   minifyEnabled true
+         //   shrinkResources true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
