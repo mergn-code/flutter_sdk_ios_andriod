@@ -1,4 +1,4 @@
-platform :ios, '14.0'
+platform :ios, '15.0'
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -36,10 +36,11 @@ target 'Runner' do
 end
 
 # ✅ Notification Service Extension Target
+# No pods: the extension only uses UserNotifications. Declaring Firebase pods here
+# duplicates the Firebase modules that the firebase_* plugins provide via Swift
+# Package Manager, which breaks the build.
 target 'NotificationService' do
   use_frameworks!
-  pod 'Firebase/Messaging'
-  pod 'GoogleUtilities'
 end
 
 # ✅ Correct way to apply build settings to all targets

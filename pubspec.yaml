@@ -1,6 +1,6 @@
 name: mergn_flutter_plugin
 description: "Mergn Flutter Plugin"
-version: 2.1.2
+version: 2.1.3
 homepage: https://github.com/mergn-code/flutter_sdk_ios_andriod
 repository: https://github.com/mergn-code/flutter_sdk_ios_andriod
 
@@ -44,8 +44,6 @@ flutter:
         pluginClass: FlutterPluginMergn
       ios:
         pluginClass: FlutterPluginMergn
-      macos:
-        pluginClass: FlutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

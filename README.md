@@ -11,6 +11,17 @@ This documentation provides integration steps and usage instructions for incorpo
 Run command flutter build iOS this will generate pod file.
 Run pod install
 
+### iOS dependency management
+
+The plugin supports both **CocoaPods** and **Swift Package Manager**. Nothing extra
+is needed for either — Flutter picks whichever your project is configured to use.
+
+If your app has Swift Package Manager enabled (`flutter config --enable-swift-package-manager`),
+use version 2.1.3 or later; earlier versions were CocoaPods-only and produce this warning:
+
+    The following plugins do not support Swift Package Manager for ios:
+      - mergn_flutter_plugin
+
 ## Usage
 
     import 'package:mergn_flutter_plugin/flutter_plugin_method_channel.dart';
