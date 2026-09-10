@@ -1,6 +1,12 @@
 import Flutter
 import UIKit
 
+// Re-exported so apps keep writing `import mergn_flutter_plugin` and still see
+// EventManager, SDKManager and friends. Those types live in the native mergn_ios
+// SDK; this plugin is only the method-channel bridge to them. Dropping the
+// re-export would break every existing AppDelegate integration.
+@_exported import mergn_ios
+
 public class FlutterPluginMergn: NSObject, FlutterPlugin {
     private var flutterViewController: FlutterViewController?
 

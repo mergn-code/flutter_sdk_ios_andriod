@@ -1,0 +1,2517 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "mergn_ios",
+    "printedName": "mergn_ios",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "Import",
+        "name": "UserNotifications",
+        "printedName": "UserNotifications",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "EventManager",
+        "printedName": "EventManager",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "apiMergnKey",
+            "printedName": "apiMergnKey",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios12EventManagerC11apiMergnKeySSvp",
+            "mangledName": "$s9mergn_ios12EventManagerC11apiMergnKeySSvp",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios12EventManagerC11apiMergnKeySSvg",
+                "mangledName": "$s9mergn_ios12EventManagerC11apiMergnKeySSvg",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "EventManager",
+                "printedName": "mergn_ios.EventManager",
+                "usr": "s:9mergn_ios12EventManagerC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios12EventManagerC6sharedACvpZ",
+            "mangledName": "$s9mergn_ios12EventManagerC6sharedACvpZ",
+            "moduleName": "mergn_ios",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "EventManager",
+                    "printedName": "mergn_ios.EventManager",
+                    "usr": "s:9mergn_ios12EventManagerC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios12EventManagerC6sharedACvgZ",
+                "mangledName": "$s9mergn_ios12EventManagerC6sharedACvgZ",
+                "moduleName": "mergn_ios",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "registerAPI",
+            "printedName": "registerAPI(clientApiKey:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC11registerAPI12clientApiKeyySS_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC11registerAPI12clientApiKeyySS_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getUniqueIdentifier",
+            "printedName": "getUniqueIdentifier()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC19getUniqueIdentifierSSyF",
+            "mangledName": "$s9mergn_ios12EventManagerC19getUniqueIdentifierSSyF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "saveCustomerId",
+            "printedName": "saveCustomerId(customerId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC14saveCustomerId08customerG0S2S_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC14saveCustomerId08customerG0S2S_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "saveFirebaseToken",
+            "printedName": "saveFirebaseToken(token:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC17saveFirebaseToken5tokenS2S_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC17saveFirebaseToken5tokenS2S_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getCustomerId",
+            "printedName": "getCustomerId()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC13getCustomerIdSSyF",
+            "mangledName": "$s9mergn_ios12EventManagerC13getCustomerIdSSyF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getFirebaseToken",
+            "printedName": "getFirebaseToken()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC16getFirebaseTokenSSyF",
+            "mangledName": "$s9mergn_ios12EventManagerC16getFirebaseTokenSSyF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getEventList",
+            "printedName": "getEventList()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC03getC4ListyyF",
+            "mangledName": "$s9mergn_ios12EventManagerC03getC4ListyyF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getAttributeList",
+            "printedName": "getAttributeList()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC16getAttributeListyyF",
+            "mangledName": "$s9mergn_ios12EventManagerC16getAttributeListyyF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getAttributeValue",
+            "printedName": "getAttributeValue(attributeId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC17getAttributeValue11attributeIdS2S_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC17getAttributeValue11attributeIdS2S_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "postIdentification",
+            "printedName": "postIdentification(identity:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC18postIdentification8identityySSSg_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC18postIdentification8identityySSSg_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sendEvent",
+            "printedName": "sendEvent(eventName:properties:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.String : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC04sendC09eventName10propertiesySS_SDySSypGtF",
+            "mangledName": "$s9mergn_ios12EventManagerC04sendC09eventName10propertiesySS_SDySSypGtF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sendPopupEvent",
+            "printedName": "sendPopupEvent(eventName:popupActionProperty:popupAction:actionValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC09sendPopupC09eventName19popupActionProperty0iJ011actionValueySS_S3StF",
+            "mangledName": "$s9mergn_ios12EventManagerC09sendPopupC09eventName19popupActionProperty0iJ011actionValueySS_S3StF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sendAttribute",
+            "printedName": "sendAttribute(attributeName:attributeValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC13sendAttribute13attributeName0G5ValueySS_SStF",
+            "mangledName": "$s9mergn_ios12EventManagerC13sendAttribute13attributeName0G5ValueySS_SStF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "openWebView",
+            "printedName": "openWebView(from:htmlString:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC11openWebView4from10htmlStringySo16UIViewControllerC_SStF",
+            "mangledName": "$s9mergn_ios12EventManagerC11openWebView4from10htmlStringySo16UIViewControllerC_SStF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "firebaseToken",
+            "printedName": "firebaseToken(token:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC13firebaseToken5tokenySS_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC13firebaseToken5tokenySS_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "notificationViewed",
+            "printedName": "notificationViewed(notificationData:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UNNotificationRequest",
+                "printedName": "UserNotifications.UNNotificationRequest",
+                "usr": "c:objc(cs)UNNotificationRequest"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC18notificationViewed0E4DataySo21UNNotificationRequestC_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC18notificationViewed0E4DataySo21UNNotificationRequestC_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "notificationTapped",
+            "printedName": "notificationTapped(notificationData:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UNNotificationRequest",
+                "printedName": "UserNotifications.UNNotificationRequest",
+                "usr": "c:objc(cs)UNNotificationRequest"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios12EventManagerC18notificationTapped0E4DataySo21UNNotificationRequestC_tF",
+            "mangledName": "$s9mergn_ios12EventManagerC18notificationTapped0E4DataySo21UNNotificationRequestC_tF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "isAppInstallDateValid",
+            "printedName": "isAppInstallDateValid",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios12EventManagerC21isAppInstallDateValidSbvp",
+            "mangledName": "$s9mergn_ios12EventManagerC21isAppInstallDateValidSbvp",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios12EventManagerC21isAppInstallDateValidSbvg",
+                "mangledName": "$s9mergn_ios12EventManagerC21isAppInstallDateValidSbvg",
+                "moduleName": "mergn_ios",
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:9mergn_ios12EventManagerC",
+        "mangledName": "$s9mergn_ios12EventManagerC",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "InAppMergnDelegate",
+        "printedName": "InAppMergnDelegate",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "DidReceiveInAppDeepLink",
+            "printedName": "DidReceiveInAppDeepLink(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios18InAppMergnDelegateP010DidReceivecD8DeepLinkyySSF",
+            "mangledName": "$s9mergn_ios18InAppMergnDelegateP010DidReceivecD8DeepLinkyySSF",
+            "moduleName": "mergn_ios",
+            "genericSig": "<τ_0_0 where τ_0_0 : mergn_ios.InAppMergnDelegate>",
+            "sugared_genericSig": "<Self where Self : mergn_ios.InAppMergnDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:9mergn_ios18InAppMergnDelegateP",
+        "mangledName": "$s9mergn_ios18InAppMergnDelegateP",
+        "moduleName": "mergn_ios",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SDKManager",
+        "printedName": "SDKManager",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SDKManager",
+                "printedName": "mergn_ios.SDKManager",
+                "usr": "s:9mergn_ios10SDKManagerC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios10SDKManagerC6sharedACvpZ",
+            "mangledName": "$s9mergn_ios10SDKManagerC6sharedACvpZ",
+            "moduleName": "mergn_ios",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SDKManager",
+                    "printedName": "mergn_ios.SDKManager",
+                    "usr": "s:9mergn_ios10SDKManagerC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios10SDKManagerC6sharedACvgZ",
+                "mangledName": "$s9mergn_ios10SDKManagerC6sharedACvgZ",
+                "moduleName": "mergn_ios",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "setCurrentViewController",
+            "printedName": "setCurrentViewController(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "UIKit.UIViewController?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UIViewController",
+                    "printedName": "UIKit.UIViewController",
+                    "usr": "c:objc(cs)UIViewController"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios10SDKManagerC24setCurrentViewControlleryySo06UIViewG0CSgF",
+            "mangledName": "$s9mergn_ios10SDKManagerC24setCurrentViewControlleryySo06UIViewG0CSgF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getCurrentViewController",
+            "printedName": "getCurrentViewController()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "UIKit.UIViewController?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UIViewController",
+                    "printedName": "UIKit.UIViewController",
+                    "usr": "c:objc(cs)UIViewController"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios10SDKManagerC24getCurrentViewControllerSo06UIViewG0CSgyF",
+            "mangledName": "$s9mergn_ios10SDKManagerC24getCurrentViewControllerSo06UIViewG0CSgyF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:9mergn_ios10SDKManagerC",
+        "mangledName": "$s9mergn_ios10SDKManagerC",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SDKManagerError",
+        "printedName": "SDKManagerError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "invalidViewController",
+            "printedName": "invalidViewController",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(mergn_ios.SDKManagerError.Type) -> mergn_ios.SDKManagerError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SDKManagerError",
+                    "printedName": "mergn_ios.SDKManagerError",
+                    "usr": "s:9mergn_ios15SDKManagerErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "mergn_ios.SDKManagerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SDKManagerError",
+                        "printedName": "mergn_ios.SDKManagerError",
+                        "usr": "s:9mergn_ios15SDKManagerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9mergn_ios15SDKManagerErrorO21invalidViewControlleryA2CmF",
+            "mangledName": "$s9mergn_ios15SDKManagerErrorO21invalidViewControlleryA2CmF",
+            "moduleName": "mergn_ios"
+          },
+          {
+            "kind": "Var",
+            "name": "viewControllerNotSet",
+            "printedName": "viewControllerNotSet",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(mergn_ios.SDKManagerError.Type) -> mergn_ios.SDKManagerError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SDKManagerError",
+                    "printedName": "mergn_ios.SDKManagerError",
+                    "usr": "s:9mergn_ios15SDKManagerErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "mergn_ios.SDKManagerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SDKManagerError",
+                        "printedName": "mergn_ios.SDKManagerError",
+                        "usr": "s:9mergn_ios15SDKManagerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9mergn_ios15SDKManagerErrorO20viewControllerNotSetyA2CmF",
+            "mangledName": "$s9mergn_ios15SDKManagerErrorO20viewControllerNotSetyA2CmF",
+            "moduleName": "mergn_ios"
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SDKManagerError",
+                "printedName": "mergn_ios.SDKManagerError",
+                "usr": "s:9mergn_ios15SDKManagerErrorO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SDKManagerError",
+                "printedName": "mergn_ios.SDKManagerError",
+                "usr": "s:9mergn_ios15SDKManagerErrorO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios15SDKManagerErrorO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s9mergn_ios15SDKManagerErrorO2eeoiySbAC_ACtFZ",
+            "moduleName": "mergn_ios",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios15SDKManagerErrorO9hashValueSivp",
+            "mangledName": "$s9mergn_ios15SDKManagerErrorO9hashValueSivp",
+            "moduleName": "mergn_ios",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios15SDKManagerErrorO9hashValueSivg",
+                "mangledName": "$s9mergn_ios15SDKManagerErrorO9hashValueSivg",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios15SDKManagerErrorO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s9mergn_ios15SDKManagerErrorO4hash4intoys6HasherVz_tF",
+            "moduleName": "mergn_ios",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:9mergn_ios15SDKManagerErrorO",
+        "mangledName": "$s9mergn_ios15SDKManagerErrorO",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "MergnSDKManager",
+        "printedName": "MergnSDKManager",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "MergnSDKManager",
+                "printedName": "mergn_ios.MergnSDKManager",
+                "usr": "s:9mergn_ios15MergnSDKManagerC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios15MergnSDKManagerC6sharedACvpZ",
+            "mangledName": "$s9mergn_ios15MergnSDKManagerC6sharedACvpZ",
+            "moduleName": "mergn_ios",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "MergnSDKManager",
+                    "printedName": "mergn_ios.MergnSDKManager",
+                    "usr": "s:9mergn_ios15MergnSDKManagerC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios15MergnSDKManagerC6sharedACvgZ",
+                "mangledName": "$s9mergn_ios15MergnSDKManagerC6sharedACvgZ",
+                "moduleName": "mergn_ios",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "inAppDelegateMergn",
+            "printedName": "inAppDelegateMergn",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any mergn_ios.InAppMergnDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvp",
+            "mangledName": "$s9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvp",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any mergn_ios.InAppMergnDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InAppMergnDelegate",
+                        "printedName": "any mergn_ios.InAppMergnDelegate",
+                        "usr": "s:9mergn_ios18InAppMergnDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvg",
+                "mangledName": "$s9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvg",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any mergn_ios.InAppMergnDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InAppMergnDelegate",
+                        "printedName": "any mergn_ios.InAppMergnDelegate",
+                        "usr": "s:9mergn_ios18InAppMergnDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvs",
+                "mangledName": "$s9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvs",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvM",
+                "mangledName": "$s9mergn_ios15MergnSDKManagerC013inAppDelegateC0AA02InfcG0_pSgvM",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:9mergn_ios15MergnSDKManagerC",
+        "mangledName": "$s9mergn_ios15MergnSDKManagerC",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "mergn_ios"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "WebViewController",
+        "printedName": "WebViewController",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any mergn_ios.InAppMergnDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvp",
+            "mangledName": "$s9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvp",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "HasInitialValue",
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any mergn_ios.InAppMergnDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InAppMergnDelegate",
+                        "printedName": "any mergn_ios.InAppMergnDelegate",
+                        "usr": "s:9mergn_ios18InAppMergnDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvg",
+                "mangledName": "$s9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvg",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any mergn_ios.InAppMergnDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InAppMergnDelegate",
+                        "printedName": "any mergn_ios.InAppMergnDelegate",
+                        "usr": "s:9mergn_ios18InAppMergnDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvs",
+                "mangledName": "$s9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvs",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvM",
+                "mangledName": "$s9mergn_ios17WebViewControllerC8delegateAA18InAppMergnDelegate_pSgvM",
+                "moduleName": "mergn_ios",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "viewDidLoad",
+            "printedName": "viewDidLoad()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)viewDidLoad",
+            "mangledName": "$s9mergn_ios17WebViewControllerC11viewDidLoadyyF",
+            "moduleName": "mergn_ios",
+            "overriding": true,
+            "objc_name": "viewDidLoad",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "Override",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "viewDidAppear",
+            "printedName": "viewDidAppear(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)viewDidAppear:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC13viewDidAppearyySbF",
+            "moduleName": "mergn_ios",
+            "overriding": true,
+            "objc_name": "viewDidAppear:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "Override",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "loadHTML",
+            "printedName": "loadHTML(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9mergn_ios17WebViewControllerC8loadHTMLyySSF",
+            "mangledName": "$s9mergn_ios17WebViewControllerC8loadHTMLyySSF",
+            "moduleName": "mergn_ios",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "webView",
+            "printedName": "webView(_:didFinish:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WKWebView",
+                "printedName": "WebKit.WKWebView",
+                "usr": "c:objc(cs)WKWebView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImplicitlyUnwrappedOptional",
+                "printedName": "WebKit.WKNavigation?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WKNavigation",
+                    "printedName": "WebKit.WKNavigation",
+                    "usr": "c:objc(cs)WKNavigation"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)webView:didFinishNavigation:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC03webD0_9didFinishySo05WKWebD0C_So12WKNavigationCSgtF",
+            "moduleName": "mergn_ios",
+            "objc_name": "webView:didFinishNavigation:",
+            "declAttributes": [
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "webView",
+            "printedName": "webView(_:decidePolicyFor:decisionHandler:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WKWebView",
+                "printedName": "WebKit.WKWebView",
+                "usr": "c:objc(cs)WKWebView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WKNavigationAction",
+                "printedName": "WebKit.WKNavigationAction",
+                "usr": "c:objc(cs)WKNavigationAction"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(WebKit.WKNavigationActionPolicy) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WKNavigationActionPolicy",
+                    "printedName": "WebKit.WKNavigationActionPolicy",
+                    "usr": "c:@E@WKNavigationActionPolicy"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)webView:decidePolicyForNavigationAction:decisionHandler:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC03webD0_15decidePolicyFor15decisionHandlerySo05WKWebD0C_So18WKNavigationActionCySo0mnH0VctF",
+            "moduleName": "mergn_ios",
+            "objc_name": "webView:decidePolicyForNavigationAction:decisionHandler:",
+            "declAttributes": [
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "webView",
+            "printedName": "webView(_:didFail:withError:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WKWebView",
+                "printedName": "WebKit.WKWebView",
+                "usr": "c:objc(cs)WKWebView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImplicitlyUnwrappedOptional",
+                "printedName": "WebKit.WKNavigation?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WKNavigation",
+                    "printedName": "WebKit.WKNavigation",
+                    "usr": "c:objc(cs)WKNavigation"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Error",
+                "printedName": "any Swift.Error",
+                "usr": "s:s5ErrorP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)webView:didFailNavigation:withError:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC03webD0_7didFail9withErrorySo05WKWebD0C_So12WKNavigationCSgs0J0_ptF",
+            "moduleName": "mergn_ios",
+            "objc_name": "webView:didFailNavigation:withError:",
+            "declAttributes": [
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "userContentController",
+            "printedName": "userContentController(_:didReceive:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WKUserContentController",
+                "printedName": "WebKit.WKUserContentController",
+                "usr": "c:objc(cs)WKUserContentController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WKScriptMessage",
+                "printedName": "WebKit.WKScriptMessage",
+                "usr": "c:objc(cs)WKScriptMessage"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)userContentController:didReceiveScriptMessage:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC011userContentE0_10didReceiveySo06WKUsergE0C_So15WKScriptMessageCtF",
+            "moduleName": "mergn_ios",
+            "objc_name": "userContentController:didReceiveScriptMessage:",
+            "declAttributes": [
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(nibName:bundle:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WebViewController",
+                "printedName": "mergn_ios.WebViewController",
+                "usr": "c:@M@mergn_ios@objc(cs)WebViewController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Bundle?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bundle",
+                    "printedName": "Foundation.Bundle",
+                    "usr": "c:objc(cs)NSBundle"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)initWithNibName:bundle:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC7nibName6bundleACSSSg_So8NSBundleCSgtcfc",
+            "moduleName": "mergn_ios",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "initWithNibName:bundle:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(coder:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "mergn_ios.WebViewController?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WebViewController",
+                    "printedName": "mergn_ios.WebViewController",
+                    "usr": "c:@M@mergn_ios@objc(cs)WebViewController"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NSCoder",
+                "printedName": "Foundation.NSCoder",
+                "usr": "c:objc(cs)NSCoder"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@mergn_ios@objc(cs)WebViewController(im)initWithCoder:",
+            "mangledName": "$s9mergn_ios17WebViewControllerC5coderACSgSo7NSCoderC_tcfc",
+            "moduleName": "mergn_ios",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "initWithCoder:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "Required"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@mergn_ios@objc(cs)WebViewController",
+        "mangledName": "$s9mergn_ios17WebViewControllerC",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "Preconcurrency",
+          "Custom",
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)UIViewController",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "UIKit.UIViewController",
+          "UIKit.UIResponder",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "UITraitChangeObservable",
+            "printedName": "UITraitChangeObservable",
+            "usr": "s:5UIKit23UITraitChangeObservableP",
+            "mangledName": "$s5UIKit23UITraitChangeObservableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "mergn_ios",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "UIApplication",
+        "printedName": "UIApplication",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "topViewController",
+            "printedName": "topViewController(base:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "UIKit.UIViewController?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UIViewController",
+                    "printedName": "UIKit.UIViewController",
+                    "usr": "c:objc(cs)UIViewController"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "UIKit.UIViewController?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UIViewController",
+                    "printedName": "UIKit.UIViewController",
+                    "usr": "c:objc(cs)UIViewController"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So13UIApplicationC9mergn_iosE17topViewController4baseSo06UIViewF0CSgAH_tFZ",
+            "mangledName": "$sSo13UIApplicationC9mergn_iosE17topViewController4baseSo06UIViewF0CSgAH_tFZ",
+            "moduleName": "mergn_ios",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "Preconcurrency",
+              "Custom"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:objc(cs)UIApplication",
+        "moduleName": "UIKit",
+        "isOpen": true,
+        "intro_iOS": "2.0",
+        "objc_name": "UIApplication",
+        "declAttributes": [
+          "Preconcurrency",
+          "Available",
+          "ObjC",
+          "NonSendable",
+          "Custom",
+          "Dynamic"
+        ],
+        "superclassUsr": "c:objc(cs)UIResponder",
+        "isExternal": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "UIKit.UIResponder",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/AppConstantsMergn.swift",
+      "kind": "BooleanLiteral",
+      "offset": 127,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/AppConstantsMergn.swift",
+      "kind": "StringLiteral",
+      "offset": 163,
+      "length": 21,
+      "value": "\"mergn_app_installed\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/AppConstantsMergn.swift",
+      "kind": "StringLiteral",
+      "offset": 215,
+      "length": 14,
+      "value": "\"App Launched\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 150,
+      "length": 14,
+      "value": "\"App Launched\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 188,
+      "length": 14,
+      "value": "\"Popup Viewed\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 226,
+      "length": 14,
+      "value": "\"Popup Action\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 270,
+      "length": 21,
+      "value": "\"App Session Started\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 323,
+      "length": 23,
+      "value": "\"App Session Concluded\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 375,
+      "length": 15,
+      "value": "\"App Installed\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 421,
+      "length": 21,
+      "value": "\"Notification Viewed\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 474,
+      "length": 22,
+      "value": "\"Notification Clicked\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 516,
+      "length": 10,
+      "value": "\"App Exit\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 551,
+      "length": 16,
+      "value": "\"App Push Token\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 595,
+      "length": 19,
+      "value": "\"Android Error Log\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/EventNames.swift",
+      "kind": "StringLiteral",
+      "offset": 639,
+      "length": 22,
+      "value": "\"Mobile App Installed\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionEventProperty.swift",
+      "kind": "StringLiteral",
+      "offset": 183,
+      "length": 14,
+      "value": "\"Button Click\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionEventProperty.swift",
+      "kind": "StringLiteral",
+      "offset": 225,
+      "length": 13,
+      "value": "\"Image Click\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionEventProperty.swift",
+      "kind": "StringLiteral",
+      "offset": 266,
+      "length": 13,
+      "value": "\"Form Submit\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionEventProperty.swift",
+      "kind": "StringLiteral",
+      "offset": 307,
+      "length": 13,
+      "value": "\"Close Click\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionEventProperty.swift",
+      "kind": "StringLiteral",
+      "offset": 342,
+      "length": 12,
+      "value": "\"Popup View\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionName.swift",
+      "kind": "StringLiteral",
+      "offset": 154,
+      "length": 7,
+      "value": "\"click\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionName.swift",
+      "kind": "StringLiteral",
+      "offset": 179,
+      "length": 7,
+      "value": "\"close\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionName.swift",
+      "kind": "StringLiteral",
+      "offset": 203,
+      "length": 6,
+      "value": "\"form\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionName.swift",
+      "kind": "StringLiteral",
+      "offset": 226,
+      "length": 6,
+      "value": "\"sent\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/Enum\/PopupActionName.swift",
+      "kind": "StringLiteral",
+      "offset": 249,
+      "length": 6,
+      "value": "\"view\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 221,
+      "length": 30,
+      "value": "\"com.example.uniqueIdentifier\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 287,
+      "length": 20,
+      "value": "\"customer_mergn_key\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 338,
+      "length": 15,
+      "value": "\"api_mergn_key\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "Array",
+      "offset": 466,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 499,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 538,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 578,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 618,
+      "length": 22,
+      "value": "\"mergn_firebase_token\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 677,
+      "length": 21,
+      "value": "\"mergn_app_installed\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 740,
+      "length": 24,
+      "value": "\"mergn_notfication_view\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 807,
+      "length": 25,
+      "value": "\"mergn_notfication_click\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 866,
+      "length": 17,
+      "value": "\"event_map_mergn\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 941,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "StringLiteral",
+      "offset": 990,
+      "length": 25,
+      "value": "\"com.mergn.appEventQueue\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "Dictionary",
+      "offset": 1334,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "Dictionary",
+      "offset": 3127,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "Dictionary",
+      "offset": 3197,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/EventManager.swift",
+      "kind": "Array",
+      "offset": 26080,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/NetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 213,
+      "length": 5,
+      "value": "\"GET\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/NetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 235,
+      "length": 6,
+      "value": "\"POST\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/NetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 257,
+      "length": 5,
+      "value": "\"PUT\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/NetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 751,
+      "length": 43,
+      "value": "\"https:\/\/api.mergn.com\/sdk-management\/api\/\""
+    },
+    {
+      "filePath": "\/tmp\/mergn_ios_build\/Sources\/mergn_ios\/models\/AttributeListResponse.swift",
+      "kind": "StringLiteral",
+      "offset": 847,
+      "length": 20,
+      "value": "\"attribute_property\""
+    }
+  ]
+}

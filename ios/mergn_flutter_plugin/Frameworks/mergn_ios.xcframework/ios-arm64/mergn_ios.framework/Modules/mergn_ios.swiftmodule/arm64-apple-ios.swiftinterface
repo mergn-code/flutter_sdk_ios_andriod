@@ -1,0 +1,82 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.1 effective-5.10 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)
+// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name mergn_ios
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.1
+import Foundation
+import Swift
+import UIKit
+import UserNotifications
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers public class EventManager {
+  final public let apiMergnKey: Swift.String
+  public static let shared: mergn_ios.EventManager
+  public func registerAPI(clientApiKey: Swift.String)
+  public func getUniqueIdentifier() -> Swift.String
+  public func saveCustomerId(customerId: Swift.String) -> Swift.String
+  public func saveFirebaseToken(token: Swift.String) -> Swift.String
+  public func getCustomerId() -> Swift.String
+  public func getFirebaseToken() -> Swift.String
+  public func getEventList()
+  public func getAttributeList()
+  public func getAttributeValue(attributeId: Swift.String) -> Swift.String
+  public func postIdentification(identity: Swift.String? = nil)
+  public func sendEvent(eventName: Swift.String, properties: [Swift.String : Any])
+  public func sendPopupEvent(eventName: Swift.String, popupActionProperty: Swift.String, popupAction: Swift.String, actionValue: Swift.String)
+  public func sendAttribute(attributeName: Swift.String, attributeValue: Swift.String)
+  public func openWebView(from parentViewController: UIKit.UIViewController, htmlString: Swift.String)
+  public func firebaseToken(token: Swift.String)
+  public func notificationViewed(notificationData: UserNotifications.UNNotificationRequest)
+  public func notificationTapped(notificationData: UserNotifications.UNNotificationRequest)
+  public var isAppInstallDateValid: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@available(iOSApplicationExtension, unavailable)
+extension UIKit.UIApplication {
+  @_Concurrency.MainActor @preconcurrency public static func topViewController(base: UIKit.UIViewController? = UIApplication.shared
+            .connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow })?.rootViewController }
+            .first) -> UIKit.UIViewController?
+}
+public protocol InAppMergnDelegate : AnyObject {
+  func DidReceiveInAppDeepLink(_ url: Swift.String)
+}
+@_hasMissingDesignatedInitializers public class SDKManager {
+  public static let shared: mergn_ios.SDKManager
+  public func setCurrentViewController(_ viewController: UIKit.UIViewController?)
+  public func getCurrentViewController() -> UIKit.UIViewController?
+  @objc deinit
+}
+public enum SDKManagerError : Swift.Error {
+  case invalidViewController
+  case viewControllerNotSet
+  public static func == (a: mergn_ios.SDKManagerError, b: mergn_ios.SDKManagerError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class MergnSDKManager {
+  public static let shared: mergn_ios.MergnSDKManager
+  weak public var inAppDelegateMergn: (any mergn_ios.InAppMergnDelegate)?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency public class WebViewController : UIKit.UIViewController, WebKit.WKNavigationDelegate, WebKit.WKScriptMessageHandler {
+  @_Concurrency.MainActor @preconcurrency weak public var delegate: (any mergn_ios.InAppMergnDelegate)?
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency public func loadHTML(_ htmlString: Swift.String)
+  @_Concurrency.MainActor @preconcurrency @objc public func webView(_ webView: WebKit.WKWebView, didFinish navigation: WebKit.WKNavigation!)
+  @_Concurrency.MainActor @preconcurrency @objc public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy) -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency @objc public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: any Swift.Error)
+  @_Concurrency.MainActor @preconcurrency @objc public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension mergn_ios.SDKManagerError : Swift.Equatable {}
+extension mergn_ios.SDKManagerError : Swift.Hashable {}
