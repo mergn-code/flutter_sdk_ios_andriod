@@ -1,4 +1,4 @@
-## 3.0.0
+## 3.0.0-beta.1
 
 The iOS plugin is now a thin bridge over the native Mergn iOS SDK
 (`mergn_ios.xcframework`). Previously it carried its own Swift reimplementation

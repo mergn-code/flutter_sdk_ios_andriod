@@ -1,6 +1,6 @@
 Flutter SDK Merge
 
-This documentation provides integration steps and usage instructions for incorporating the Flutter SDK 3.0.0 into your Flutter project. Follow these steps to initialize the SDK, record events, and manage attributes within your application.
+This documentation provides integration steps and usage instructions for incorporating the Flutter SDK 3.0.0-beta.1 into your Flutter project. Follow these steps to initialize the SDK, record events, and manage attributes within your application.
 
 ## Integration Steps
 
@@ -17,14 +17,21 @@ The plugin supports both **CocoaPods** and **Swift Package Manager**. Nothing ex
 is needed for either — Flutter picks whichever your project is configured to use.
 
 If your app has Swift Package Manager enabled (`flutter config --enable-swift-package-manager`),
-use version 2.1.3 or later; earlier versions were CocoaPods-only and produce this warning:
+use 3.0.0-beta.1 or later. Every earlier published version is CocoaPods-only and
+produces this warning:
 
     The following plugins do not support Swift Package Manager for ios:
       - mergn_flutter_plugin
 
+Because it is a prerelease, `^3.0.0` will not resolve to it. Depend on it
+explicitly:
+
+    dependencies:
+      mergn_flutter_plugin: 3.0.0-beta.1
+
 ### iOS requirements
 
-From 3.0.0 the iOS plugin delegates to the native Mergn iOS SDK, shipped as a
+From 3.0.0-beta.1 the iOS plugin delegates to the native Mergn iOS SDK, shipped as a
 prebuilt `mergn_ios.xcframework`, instead of carrying its own copy of the SDK
 source. The plugin re-exports that module, so `import mergn_flutter_plugin` and
 the `SDKManager` / `EventManager` calls below are unchanged.

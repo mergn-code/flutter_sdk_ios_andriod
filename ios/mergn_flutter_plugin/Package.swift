@@ -17,6 +17,12 @@ import PackageDescription
 // Release checklist: ./scripts/package_sdk.sh, upload the zip to a release tagged
 // v<version>, then update `url` and `checksum` below. The zip is not
 // reproducible, so paste the checksum printed for the exact zip you uploaded.
+//
+// The url below deliberately points at the v3.0.0 release even while the plugin
+// is on 3.0.0-beta.1: the native SDK binary does not change between the beta and
+// the stable release, so both consume the same verified artifact. Note that
+// package_sdk.sh derives the url from the podspec version, so re-running it
+// during the beta would rewrite this to a v3.0.0-beta.1 tag that does not exist.
 let package = Package(
     name: "mergn_flutter_plugin",
     platforms: [

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'mergn_flutter_plugin'
-  s.version          = '3.0.0'
+  s.version          = '3.0.0-beta.1'
   s.summary          = 'Mergn Flutter Plugin'
   s.description      = <<-DESC
 Mergn Flutter Plugin
