@@ -17,21 +17,21 @@ Future<void> main() async {
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
         options: FirebaseOptions(
-          apiKey: 'AIzaSyCkwUhjvskWK6o19jnSC3yd2Nkk-juSfTE',
-          appId: '1:301998040977:android:be0d9b2a1fe27b376ddc30',
-          messagingSenderId: '301998040977',
-          projectId: 'flutter-android-and-ios',
-          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
+          apiKey: 'YOUR_FIREBASE_ANDROID_API_KEY',
+          appId: 'YOUR_FIREBASE_ANDROID_APP_ID',
+          messagingSenderId: 'YOUR_FIREBASE_SENDER_ID',
+          projectId: 'YOUR_FIREBASE_PROJECT_ID',
+          storageBucket: 'YOUR_FIREBASE_STORAGE_BUCKET',
         ),
       );
     } else if (Platform.isIOS) {
       await Firebase.initializeApp(
         options: FirebaseOptions(
-          apiKey: 'AIzaSyAWVV1FmwcgX5FCLVpFJND7i0OqWhe-QiQ',
-          appId: '1:301998040977:ios:dc7a5a86ef16e3336ddc30',
-          messagingSenderId: '301998040977',
-          projectId: 'flutter-android-and-ios',
-          storageBucket: 'flutter-android-and-ios.firebasestorage.app',
+          apiKey: 'YOUR_FIREBASE_IOS_API_KEY',
+          appId: 'YOUR_FIREBASE_IOS_APP_ID',
+          messagingSenderId: 'YOUR_FIREBASE_SENDER_ID',
+          projectId: 'YOUR_FIREBASE_PROJECT_ID',
+          storageBucket: 'YOUR_FIREBASE_STORAGE_BUCKET',
         ),
       );
     }
@@ -152,9 +152,8 @@ class _EventManagerScreenState extends State<EventManagerScreen> {
     );
   }
   Future<void> _registerApi() async {
-    //final clientApiKey = 'b4fe9fd760d4071ecac7c3ed919b07c1m39rgnc4e3b260c20e663da839b4bbb423210c';
-   // final clientApiKey = '4f3f1e5562611f5a612c644d778a4a6cm238rgn4b5d59d9d1350b77f880425a7fcd88d0';
-    final clientApiKey = '452eadm67rgn4a69d5afc8d453d8157fdf9de91223aa6107e4bddf7747905100758d0c';
+    // Replace with the client API key from your Mergn dashboard.
+    final clientApiKey = 'YOUR_MERGN_CLIENT_API_KEY';
     try {
       await MethodChannelFlutterPlugin().registerAPICall(
           clientApiKey);
